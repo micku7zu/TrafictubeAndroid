@@ -87,6 +87,6 @@ public class Video {
 
     @Override
     public String toString() {
-        return this.getTitle() + " - " + this.getUser().getUsername() + " - " + this.getTimeAgo();
+        return this.getTitle() + " - " + this.getUser().getUsername();
     }
 }

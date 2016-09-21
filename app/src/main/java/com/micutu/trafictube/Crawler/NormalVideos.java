@@ -11,7 +11,6 @@ import com.micutu.trafictube.Data.Site;
 import com.micutu.trafictube.Data.User;
 import com.micutu.trafictube.Data.Video;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,7 +58,7 @@ public class NormalVideos {
                             List<Video> videos = getLatestVideosFromPageContent(response);
 
                             NormalVideos.this.haveNextPage = false;
-                            if (videos.size() >=  20) { //only if we have more than 20 videos we need to chck if we have more pages
+                            if (videos.size() >= 20) { //only if we have more than 20 videos we need to chck if we have more pages
                                 NormalVideos.this.haveNextPage = haveMorePageFromPageContent(response);
                             }
 
@@ -113,7 +112,7 @@ public class NormalVideos {
 
         try {
             content = content.split("class=\"latest-clips\">")[1].split("<footer")[0];
-        }catch(Exception e) {
+        } catch (Exception e) {
             content = content.split("class=\"video-listing\">")[1].split("<footer")[0];
         }
 
