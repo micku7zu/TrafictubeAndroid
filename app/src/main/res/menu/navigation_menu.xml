@@ -5,7 +5,7 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/latest"
-            android:checked="false"
+            android:checked="true"
             android:icon="@drawable/ic_new"
             android:title="@string/clipuri_noi" />
 

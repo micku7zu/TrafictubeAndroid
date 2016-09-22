@@ -1,7 +1,10 @@
 package com.micutu.trafictube;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +16,7 @@ import android.view.View;
 import com.micutu.trafictube.Crawler.TopVideosSingleton;
 import com.micutu.trafictube.Crawler.VideoListResponse;
 import com.micutu.trafictube.Data.Video;
+import com.micutu.trafictube.Fragments.VideosListFragment;
 
 import java.util.Map;
 
@@ -27,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
+
+        switchFragment(R.id.latest);
 
         TopVideosSingleton.getVideoOfTheDay(getApplicationContext(), new VideoListResponse() {
             @Override
@@ -51,14 +57,13 @@ public class MainActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switchFragment(item.getItemId());
                 if (item.isChecked()) {
                     item.setChecked(false);
                 } else {
                     item.setChecked(true);
                 }
-
                 drawerLayout.closeDrawers();
-
                 return false;
             }
         });
@@ -69,5 +74,17 @@ public class MainActivity extends AppCompatActivity {
                 drawerLayout.openDrawer(GravityCompat.START);
             }
         });
+    }
+
+    private void switchFragment(int itemId) {
+        Fragment fragment = new VideosListFragment();
+        Bundle args = new Bundle();
+        args.putInt(VideosListFragment.MENU_ID, itemId);
+        fragment.setArguments(args);
+
+        getFragmentManager().beginTransaction()
+                .setCustomAnimations(R.animator.enter, R.animator.exit)
+                .replace(R.id.frame_layout, fragment)
+                .commit();
     }
 }
