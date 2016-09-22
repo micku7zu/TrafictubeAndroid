@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:id="@+id/menu_top"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/latest"
+            android:checked="false"
+            android:icon="@drawable/ic_new"
+            android:title="@string/clipuri_noi" />
+
+        <item
+            android:id="@+id/video_of_the_day"
+            android:checked="false"
+            android:icon="@drawable/ic_play"
+            android:title="@string/clipul_zilei" />
+
+        <item
+            android:id="@+id/top_two_days"
+            android:checked="false"
+            android:icon="@drawable/ic_top1"
+            android:title="@string/top_clipuri_48_ore" />
+
+        <item
+            android:id="@+id/top_weekly"
+            android:checked="false"
+            android:icon="@drawable/ic_top2"
+            android:title="@string/top_s_pt_m_nal" />
+
+        <item
+            android:id="@+id/top_general"
+            android:checked="false"
+            android:icon="@drawable/ic_top3"
+            android:title="@string/top_general" />
+
+        <item
+            android:id="@+id/search"
+            android:checked="false"
+            android:icon="@drawable/ic_search"
+            android:title="@string/caut" />
+    </group>
+
+    <group
+        android:id="@+id/menu_bottom"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/about"
+            android:checked="false"
+            android:icon="@drawable/ic_about"
+            android:title="@string/despre"/>
+    </group>
+</menu>

@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Trafictube</string>
+    <string name="clipuri_noi">Clipuri noi</string>
+    <string name="clipul_zilei">Clipul zilei</string>
+    <string name="top_clipuri_48_ore">Top clipuri 48 ore</string>
+    <string name="top_s_pt_m_nal">Top săptămânal</string>
+    <string name="top_general">Top general</string>
+    <string name="caut">Caută</string>
+    <string name="despre">Despre</string>
 </resources>
