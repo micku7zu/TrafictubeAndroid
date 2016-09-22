@@ -46,7 +46,7 @@ public class TopVideosSingleton {
                     listener.onResponse(getInstance().getVideoOfTheDayFromResponse(content), new HashMap<String, Object>());
                 } catch (final Exception e) {
                     listener.onResponse(null, (new HashMap<String, Object>() {{
-                        put("error", e.toString());
+                        put("error", Log.getStackTraceString(e));
                     }}));
                 }
             }
@@ -71,7 +71,7 @@ public class TopVideosSingleton {
                     listener.onResponse(getInstance().getGeneralTopVideosFromResponse(content), new HashMap<String, Object>());
                 } catch (final Exception e) {
                     listener.onResponse(null, (new HashMap<String, Object>() {{
-                        put("error", e.toString());
+                        put("error", Log.getStackTraceString(e));
                     }}));
                 }
             }
@@ -90,7 +90,7 @@ public class TopVideosSingleton {
                     listener.onResponse(getInstance().getWeeklyTopVideosFromResponse(content), new HashMap<String, Object>());
                 } catch (final Exception e) {
                     listener.onResponse(null, (new HashMap<String, Object>() {{
-                        put("error", e.toString());
+                        put("error", Log.getStackTraceString(e));
                     }}));
                 }
             }
@@ -119,7 +119,7 @@ public class TopVideosSingleton {
         return videos;
     }
 
-    private Video getVideoFromHtml(String html) {
+    private static Video getVideoFromHtml(String html) {
         Video video = new Video();
         User user = new User();
 
@@ -165,6 +165,7 @@ public class TopVideosSingleton {
         }, new com.android.volley.Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "Error:" + error.getMessage());
                 TopVideosSingleton.getInstance().content = content;
                 onResponse.onResponse(null);
             }
@@ -172,6 +173,41 @@ public class TopVideosSingleton {
 
         Log.d(TAG, "Make request");
         VolleySingleton.makeRequest(context, request);
+    }
+
+    public static void getTwoDaysTopVideos(Context context, final VideosListResponse onResponse) {
+        StringRequest request = new StringRequest(Request.Method.GET, Site.link, new com.android.volley.Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    onResponse.onResponse(getTwoDaysTopVideosFromResponse(response), new HashMap<String, Object>());
+                } catch (final Exception e) {
+                    onResponse.onResponse(null, (new HashMap<String, Object>() {{
+                        put("error", Log.getStackTraceString(e));
+                    }}));
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(final VolleyError error) {
+                onResponse.onResponse(null, (new HashMap<String, Object>() {{
+                    put("error", error.getMessage());
+                }}));
+            }
+        });
+
+        VolleySingleton.makeRequest(context, request);
+    }
+
+    private static List<Video> getTwoDaysTopVideosFromResponse(String content) {
+        content = content.split("class=\"top-clips\">")[1].split("class=\"latest-clips\"")[0];
+
+        String temps[] = content.split("the-video");
+        List<Video> videos = new ArrayList<Video>();
+        for (int i = 1; i < temps.length; i++) {
+            videos.add(getVideoFromHtml(temps[i]));
+        }
+        return videos;
     }
 
     private long getCurrentTime() {

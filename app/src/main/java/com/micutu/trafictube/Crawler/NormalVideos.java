@@ -67,7 +67,7 @@ public class NormalVideos {
                             }}));
                         } catch (final Exception e) {
                             listener.onResponse(null, (new HashMap<String, Object>() {{
-                                put("error", e.toString());
+                                put("error", Log.getStackTraceString(e));
                             }}));
                         }
                     }
