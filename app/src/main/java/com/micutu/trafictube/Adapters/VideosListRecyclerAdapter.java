@@ -47,7 +47,7 @@ public class VideosListRecyclerAdapter extends RecyclerView.Adapter<VideosListVi
         }
 
         if(video.getVotes() != null) {
-            more += video.getVotes() + (new String(Character.toChars(0x1F44D))) +" \u2022 ";
+            more += video.getVotes() + " voturi \u2022 ";
         }
 
         if(video.getTimeAgo() != null) {

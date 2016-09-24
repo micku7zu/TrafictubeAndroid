@@ -8,4 +8,7 @@
     <string name="caut">Caută</string>
     <string name="despre">Despre</string>
     <string name="error_loading">Eroare la încarcarea datelor.\nVerificați conexiunea la internet.</string>
+    <string name="viewUserDescription">Vezi clipurile utilizatorului</string>
+    <string name="thumbsUpDescription">Votează</string>
+    <string name="playButtonDescription">Pornește clip</string>
 </resources>

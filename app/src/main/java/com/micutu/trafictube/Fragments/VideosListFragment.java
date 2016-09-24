@@ -3,12 +3,16 @@ package com.micutu.trafictube.Fragments;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 
 import com.micutu.trafictube.Adapters.VideosListRecyclerAdapter;
 import com.micutu.trafictube.Crawler.NormalVideos;
@@ -16,6 +20,7 @@ import com.micutu.trafictube.Crawler.TopVideosSingleton;
 import com.micutu.trafictube.Crawler.VideosListResponse;
 import com.micutu.trafictube.Data.Video;
 import com.micutu.trafictube.R;
+import com.micutu.trafictube.Views.HidingScrollListener;
 
 import java.util.List;
 import java.util.Map;
@@ -26,6 +31,7 @@ public class VideosListFragment extends Fragment implements VideosListResponse {
 
     private View root;
     private Context context;
+    private Toolbar toolbar;
 
     public VideosListFragment() {
     }
@@ -74,6 +80,34 @@ public class VideosListFragment extends Fragment implements VideosListResponse {
         }
 
         showVideos(videos);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+
+        ((RecyclerView) root.findViewById(R.id.recycler_view)).addOnScrollListener(new HidingScrollListener() {
+            @Override
+            public void onHide() {
+                hideToolbar();
+            }
+            @Override
+            public void onShow() {
+                showToolbar();
+            }
+        });
+
+        showToolbar();
+    }
+
+    private void hideToolbar() {
+        toolbar.animate().translationY(-toolbar.getHeight()).setInterpolator(new AccelerateInterpolator(2));
+    }
+
+    private void showToolbar() {
+        toolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
     }
 
     private void showVideos(List<Video> videos) {

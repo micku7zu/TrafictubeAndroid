@@ -1,9 +1,11 @@
 package com.micutu.trafictube.Adapters.ViewHolders;
 
 import android.content.Context;
+import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
@@ -16,7 +18,7 @@ public class VideosListViewHolder extends RecyclerView.ViewHolder {
     private TextView more = null;
     private NetworkImageView image = null;
 
-    public VideosListViewHolder(View itemView) {
+    public VideosListViewHolder(final View itemView) {
         super(itemView);
 
         title = (TextView) itemView.findViewById(R.id.title);

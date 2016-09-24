@@ -9,7 +9,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:paddingTop="?attr/actionBarSize"
+        android:paddingBottom="8dp"
+        android:clipToPadding="false"/>
 
     <ProgressBar
         style="?android:attr/progressBarStyleLarge"
