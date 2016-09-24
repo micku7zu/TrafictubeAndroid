@@ -142,6 +142,7 @@ public class TopVideosSingleton {
         TopVideosSingleton instance = getInstance();
 
         Log.d(TAG, "Content: " + instance.content + " - Time: " + (getCurrentTime() - instance.lastUpdate));
+        Log.d(TAG, "LAst update:" + instance.lastUpdate);
 
         /* 5 minute cache */
         if (instance.content == null || (getCurrentTime() - instance.lastUpdate) > 300) {
@@ -165,7 +166,17 @@ public class TopVideosSingleton {
         }, new com.android.volley.Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                if(error == null) {
+                    Log.d(TAG, "WTF IS NULL");
+                } else {
+                    Log.d(TAG, "NOT NULL");
+                }
                 Log.d(TAG, "Error:" + error.getMessage());
+
+                if(error.networkResponse != null) {
+                    Log.d(TAG, "ERROR status code:" + error.networkResponse.statusCode);
+                }
+
                 TopVideosSingleton.getInstance().content = content;
                 onResponse.onResponse(null);
             }

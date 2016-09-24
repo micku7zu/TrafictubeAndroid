@@ -59,12 +59,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switchFragment(item.getItemId());
-
-        if (item.isChecked()) {
-            item.setChecked(false);
-        } else {
-            item.setChecked(true);
-        }
+        item.setChecked(true);
         drawerLayout.closeDrawers();
         return false;
     }

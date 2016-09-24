@@ -7,4 +7,5 @@
     <string name="top_general">Top general</string>
     <string name="caut">Caută</string>
     <string name="despre">Despre</string>
+    <string name="error_loading">Eroare la încarcarea datelor.\nVerificați conexiunea la internet.</string>
 </resources>
