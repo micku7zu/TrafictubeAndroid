@@ -1,7 +1,5 @@
 package com.micutu.trafictube;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.app.Fragment;
@@ -13,14 +11,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.micutu.trafictube.Crawler.TopVideosSingleton;
-import com.micutu.trafictube.Crawler.VideoListResponse;
-import com.micutu.trafictube.Data.Video;
 import com.micutu.trafictube.Fragments.VideosListFragment;
 
-import java.util.Map;
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private final static String TAG = MainActivity.class.getSimpleName();
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
@@ -31,20 +24,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
-
         switchFragment(R.id.latest);
-
-        TopVideosSingleton.getVideoOfTheDay(getApplicationContext(), new VideoListResponse() {
-            @Override
-            public void onResponse(Video video, Map<String, Object> extra) {
-                if (extra.containsKey("error")) {
-                    System.out.println(extra.get("error"));
-                    return;
-                }
-
-                System.out.println(video);
-            }
-        });
     }
 
     public void init() {
@@ -54,19 +34,7 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setNavigationIcon(R.drawable.ic_menu);
 
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switchFragment(item.getItemId());
-                if (item.isChecked()) {
-                    item.setChecked(false);
-                } else {
-                    item.setChecked(true);
-                }
-                drawerLayout.closeDrawers();
-                return false;
-            }
-        });
+        navigationView.setNavigationItemSelectedListener(this);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,8 +51,21 @@ public class MainActivity extends AppCompatActivity {
         fragment.setArguments(args);
 
         getFragmentManager().beginTransaction()
-                .setCustomAnimations(R.animator.enter, R.animator.exit)
+                .setCustomAnimations(R.animator.fade_in, R.animator.fade_out)
                 .replace(R.id.frame_layout, fragment)
                 .commit();
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switchFragment(item.getItemId());
+
+        if (item.isChecked()) {
+            item.setChecked(false);
+        } else {
+            item.setChecked(true);
+        }
+        drawerLayout.closeDrawers();
+        return false;
     }
 }

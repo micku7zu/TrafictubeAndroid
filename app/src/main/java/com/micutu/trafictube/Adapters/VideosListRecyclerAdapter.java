@@ -1,4 +1,4 @@
-package com.micutu.trafictube;
+package com.micutu.trafictube.Adapters;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -8,13 +8,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.micutu.trafictube.R;
+
 import java.util.Random;
 
 /**
  * Created by micku7zu on 9/20/2016.
  */
 
-public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapter.ViewHolder> {
+public class VideosListRecyclerAdapter extends RecyclerView.Adapter<VideosListRecyclerAdapter.ViewHolder> {
     private String[] mDataset;
     private int number = 10;
     private Random random;
@@ -40,7 +42,7 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MainRecyclerAdapter(String[] myDataset) {
+    public VideosListRecyclerAdapter(String[] myDataset) {
         mDataset = myDataset;
         random = new Random();
     }
@@ -52,8 +54,8 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
 
     // Create new views (invoked by the layout manager)
     @Override
-    public MainRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                   int viewType) {
+    public VideosListRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+                                                                   int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.cardview_item, parent, false);

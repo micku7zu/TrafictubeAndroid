@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.micutu.trafictube.MainRecyclerAdapter;
+import com.micutu.trafictube.Adapters.VideosListRecyclerAdapter;
 import com.micutu.trafictube.R;
 
 public class VideosListFragment extends Fragment {
@@ -34,7 +34,7 @@ public class VideosListFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAdapter = new MainRecyclerAdapter(new String[]{"TEst", "2"});
+        mAdapter = new VideosListRecyclerAdapter(new String[]{"TEst", "2"});
         mRecyclerView.setAdapter(mAdapter);
 
         return rootView;
