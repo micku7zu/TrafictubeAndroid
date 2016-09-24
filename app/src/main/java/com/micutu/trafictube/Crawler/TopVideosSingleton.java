@@ -27,11 +27,11 @@ public class TopVideosSingleton {
     }
 
     public static TopVideosSingleton getInstance() {
-        if (instance == null) {
-            instance = new TopVideosSingleton();
+        if (TopVideosSingleton.instance == null) {
+            TopVideosSingleton.instance = new TopVideosSingleton();
         }
 
-        return instance;
+        return TopVideosSingleton.instance;
     }
 
     public static void getVideoOfTheDay(Context context, final VideoListResponse listener) {
@@ -141,8 +141,7 @@ public class TopVideosSingleton {
     private void getContent(Context context, final TopVideosSingleton.Response response) {
         TopVideosSingleton instance = getInstance();
 
-        Log.d(TAG, "Content: " + instance.content + " - Time: " + (getCurrentTime() - instance.lastUpdate));
-        Log.d(TAG, "LAst update:" + instance.lastUpdate);
+        Log.d(TAG, "Difference in time: " + (getCurrentTime() - instance.lastUpdate));
 
         /* 5 minute cache */
         if (instance.content == null || (getCurrentTime() - instance.lastUpdate) > 300) {
@@ -160,24 +159,14 @@ public class TopVideosSingleton {
         StringRequest request = new StringRequest(Request.Method.GET, link, new com.android.volley.Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                TopVideosSingleton.getInstance().content = content;
+                TopVideosSingleton.getInstance().content = response;
+                instance.lastUpdate = getCurrentTime();
                 onResponse.onResponse(response);
             }
         }, new com.android.volley.Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                if(error == null) {
-                    Log.d(TAG, "WTF IS NULL");
-                } else {
-                    Log.d(TAG, "NOT NULL");
-                }
-                Log.d(TAG, "Error:" + error.getMessage());
-
-                if(error.networkResponse != null) {
-                    Log.d(TAG, "ERROR status code:" + error.networkResponse.statusCode);
-                }
-
-                TopVideosSingleton.getInstance().content = content;
+                TopVideosSingleton.getInstance().content = null;
                 onResponse.onResponse(null);
             }
         });

@@ -12,7 +12,6 @@ import com.micutu.trafictube.R;
 
 
 public class VideosListViewHolder extends RecyclerView.ViewHolder {
-    private TextView user = null;
     private TextView title = null;
     private TextView more = null;
     private NetworkImageView image = null;
@@ -20,7 +19,6 @@ public class VideosListViewHolder extends RecyclerView.ViewHolder {
     public VideosListViewHolder(View itemView) {
         super(itemView);
 
-        user = (TextView) itemView.findViewById(R.id.user);
         title = (TextView) itemView.findViewById(R.id.title);
         more = (TextView) itemView.findViewById(R.id.more);
         image = (NetworkImageView) itemView.findViewById(R.id.image);
@@ -28,10 +26,6 @@ public class VideosListViewHolder extends RecyclerView.ViewHolder {
 
     public void setTitle(String text) {
         this.title.setText(text);
-    }
-
-    public void setUser(String text) {
-        this.user.setText(text);
     }
 
     public void setMore(String text) {
