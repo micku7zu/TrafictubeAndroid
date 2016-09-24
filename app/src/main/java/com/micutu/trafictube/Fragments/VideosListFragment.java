@@ -32,6 +32,7 @@ public class VideosListFragment extends Fragment implements VideosListResponse {
     private View root;
     private Context context;
     private Toolbar toolbar;
+    private NormalVideos normalVideos = null;
 
     public VideosListFragment() {
     }
@@ -45,12 +46,15 @@ public class VideosListFragment extends Fragment implements VideosListResponse {
     }
 
     private void loadVideos(int menuId) {
+        normalVideos = null;
         switch (menuId) {
             case R.id.latest:
-                (new NormalVideos()).getVideos(context, this);
+                normalVideos = new NormalVideos();
+                normalVideos.getVideos(context, this);
                 break;
             case R.id.search:
-                (new NormalVideos("Bihor")).getVideos(context, this);
+                normalVideos = new NormalVideos("Bihor");
+                normalVideos.getVideos(context, this);
                 break;
             case R.id.top_general:
                 TopVideosSingleton.getGeneralTopVideos(context, this);
@@ -87,12 +91,13 @@ public class VideosListFragment extends Fragment implements VideosListResponse {
         super.onActivityCreated(savedInstanceState);
 
         toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-
-        ((RecyclerView) root.findViewById(R.id.recycler_view)).addOnScrollListener(new HidingScrollListener() {
+        RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view);
+        recyclerView.addOnScrollListener(new HidingScrollListener() {
             @Override
             public void onHide() {
                 hideToolbar();
             }
+
             @Override
             public void onShow() {
                 showToolbar();
@@ -116,13 +121,36 @@ public class VideosListFragment extends Fragment implements VideosListResponse {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
-        VideosListRecyclerAdapter adapter = new VideosListRecyclerAdapter(context, videos);
+        final VideosListRecyclerAdapter adapter = new VideosListRecyclerAdapter(context, videos);
         recyclerView.setAdapter(adapter);
 
         recyclerView.setVisibility(View.VISIBLE);
+
+        if(normalVideos == null) {
+            return;
+        }
+
+        adapter.setLoadMore(new VideosListRecyclerAdapter.LoadMore() {
+            @Override
+            public void loadMore() {
+                normalVideos.getVideos(context, new VideosListResponse() {
+                    @Override
+                    public void onResponse(List<Video> videos, Map<String, Object> extra) {
+                        if(videos == null) {
+                            return;
+                        }
+
+                        adapter.addMore(videos);
+                        adapter.notifyItemRangeInserted(adapter.getItemCount() - videos.size(), videos.size());
+                        Log.d("TEST", "AM AJUNS AICI");
+                    }
+                });
+            }
+        });
     }
 
     public void showError() {
         root.findViewById(R.id.error_text).setVisibility(View.VISIBLE);
     }
+
 }
