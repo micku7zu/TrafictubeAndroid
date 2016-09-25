@@ -34,6 +34,7 @@ public class VideosListFragment extends Fragment implements VideosListResponse {
     private Context context;
     private Toolbar toolbar;
     private NormalVideos normalVideos = null;
+    private Integer menuId = null;
 
     public VideosListFragment() {
     }
@@ -41,12 +42,13 @@ public class VideosListFragment extends Fragment implements VideosListResponse {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         this.context = inflater.getContext();
+        this.menuId = getArguments().getInt(MENU_ID);
         root = inflater.inflate(R.layout.videos_list_fragment, container, false);
-        loadVideos(getArguments().getInt(MENU_ID));
+        loadVideos();
         return root;
     }
 
-    private void loadVideos(int menuId) {
+    private void loadVideos() {
         normalVideos = null;
         switch (menuId) {
             case R.id.latest:
@@ -137,7 +139,7 @@ public class VideosListFragment extends Fragment implements VideosListResponse {
                 normalVideos.getVideos(context, new VideosListResponse() {
                     @Override
                     public void onResponse(List<Video> videos, Map<String, Object> extra) {
-                        Boolean haveNextPage = false;
+                        Boolean haveNextPage = true;
                         if(extra.containsKey("haveNextPage")) {
                             haveNextPage = (Boolean) extra.get("haveNextPage");
                         }
@@ -158,6 +160,14 @@ public class VideosListFragment extends Fragment implements VideosListResponse {
 
     public void showError() {
         root.findViewById(R.id.error_container).setVisibility(View.VISIBLE);
+        root.findViewById(R.id.retry_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                root.findViewById(R.id.error_container).setVisibility(View.GONE);
+                root.findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
+                loadVideos();
+            }
+        });
     }
 
 }

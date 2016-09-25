@@ -2,6 +2,7 @@ package com.micutu.trafictube.Crawler;
 
 import android.content.Context;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
@@ -29,6 +30,8 @@ public class VolleySingleton {
     }
 
     public static void makeRequest(Context context, Request request) {
+        /* set default timeout and 2 retries */
+        request.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, 2, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         getInstance(context).queue.add(request);
     }
 

@@ -40,6 +40,7 @@
             android:layout_marginTop="8dp"
             android:backgroundTint="@color/colorAccent"
             android:textColor="@android:color/white"
+            android:id="@+id/retry_button"
             android:text="Reîncarcă" />
     </LinearLayout>
 </android.widget.FrameLayout>
