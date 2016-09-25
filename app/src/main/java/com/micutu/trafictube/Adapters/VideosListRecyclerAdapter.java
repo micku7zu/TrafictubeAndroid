@@ -3,7 +3,6 @@ package com.micutu.trafictube.Adapters;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -11,31 +10,32 @@ import com.micutu.trafictube.Adapters.ViewHolders.VideosListViewHolder;
 import com.micutu.trafictube.Data.Video;
 import com.micutu.trafictube.R;
 
-import java.net.URLEncoder;
 import java.util.List;
 
 public class VideosListRecyclerAdapter extends RecyclerView.Adapter<VideosListViewHolder> {
-    private List<Video> videos;
-    private Context context;
-    private LoadMore loadMore;
+    private List<Video> videos = null;
+    private Context context = null;
+    private OnScrollEndListener onScrollEndListener = null;
 
     public VideosListRecyclerAdapter(Context context, List<Video> videos) {
         this.videos = videos;
         this.context = context;
+        this.onScrollEndListener = null;
     }
 
-    public void setLoadMore(LoadMore loadMore) {
-        this.loadMore = loadMore;
+    public void setOnScrollEndListener(OnScrollEndListener onScrollEndListener) {
+        this.onScrollEndListener = onScrollEndListener;
     }
 
-    public void addMore(List<Video> videos) {
+    public void addVideos(List<Video> videos) {
+        Integer initialCount = this.getItemCount();
+        Integer newListSize = videos.size();
         this.videos.addAll(videos);
+        this.notifyItemRangeInserted(initialCount, newListSize);
     }
 
     @Override
     public VideosListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        //return a new VideosListViewHolder from layoutinflater
-        //add loading at the end
         return new VideosListViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_item, parent, false));
     }
 
@@ -46,24 +46,22 @@ public class VideosListRecyclerAdapter extends RecyclerView.Adapter<VideosListVi
         holder.setMore(this.getMoreText(video));
         holder.setImage(this.context, video.getImage());
 
-        if ((position >= getItemCount() - 1)) {
-            this.loadMore.loadMore();
+        if (this.onScrollEndListener != null && (position >= getItemCount() - 1)) {
+            this.onScrollEndListener.loadVideos();
         }
-
-
     }
 
     private String getMoreText(Video video) {
         String more = "";
-        if(video.getUser() != null && video.getUser().getName() != null) {
+        if (video.getUser() != null && video.getUser().getName() != null) {
             more += video.getUser().getName() + " \u2022 ";
         }
 
-        if(video.getVotes() != null) {
+        if (video.getVotes() != null) {
             more += video.getVotes() + " voturi \u2022 ";
         }
 
-        if(video.getTimeAgo() != null) {
+        if (video.getTimeAgo() != null) {
             more += video.getTimeAgo() + " \u2022 ";
         }
 
@@ -72,14 +70,14 @@ public class VideosListRecyclerAdapter extends RecyclerView.Adapter<VideosListVi
 
     @Override
     public int getItemCount() {
-        if(videos == null) {
+        if (videos == null) {
             return 0;
         }
 
         return videos.size();
     }
 
-    public interface LoadMore {
-        public void loadMore();
+    public interface OnScrollEndListener {
+        public void loadVideos();
     }
 }

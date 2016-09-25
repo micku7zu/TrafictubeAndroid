@@ -11,11 +11,13 @@ import com.micutu.trafictube.Caches.LruBitmapCache;
 public class VolleySingleton {
     private static VolleySingleton instance = null;
     private RequestQueue queue = null;
+    private RequestQueue imageQueue = null;
     private ImageLoader imageLoader = null;
 
     private VolleySingleton(Context context) {
         queue = Volley.newRequestQueue(context);
-        imageLoader = new ImageLoader(queue, new LruBitmapCache(LruBitmapCache.getCacheSize(context)));
+        imageQueue = Volley.newRequestQueue(context);
+        imageLoader = new ImageLoader(imageQueue, new LruBitmapCache(LruBitmapCache.getCacheSize(context)));
     }
 
     private static VolleySingleton getInstance(Context context) {

@@ -22,6 +22,7 @@ import com.micutu.trafictube.Data.Video;
 import com.micutu.trafictube.R;
 import com.micutu.trafictube.Views.HidingScrollListener;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -126,23 +127,29 @@ public class VideosListFragment extends Fragment implements VideosListResponse {
 
         recyclerView.setVisibility(View.VISIBLE);
 
-        if(normalVideos == null) {
+        if (normalVideos == null) {
             return;
         }
 
-        adapter.setLoadMore(new VideosListRecyclerAdapter.LoadMore() {
+        adapter.setOnScrollEndListener(new VideosListRecyclerAdapter.OnScrollEndListener() {
             @Override
-            public void loadMore() {
+            public void loadVideos() {
                 normalVideos.getVideos(context, new VideosListResponse() {
                     @Override
                     public void onResponse(List<Video> videos, Map<String, Object> extra) {
-                        if(videos == null) {
+                        Boolean haveNextPage = false;
+                        if(extra.containsKey("haveNextPage")) {
+                            haveNextPage = (Boolean) extra.get("haveNextPage");
+                        }
+                        if(haveNextPage == false) {
+                            adapter.setOnScrollEndListener(null);
+                        }
+
+                        if (videos == null) {
                             return;
                         }
 
-                        adapter.addMore(videos);
-                        adapter.notifyItemRangeInserted(adapter.getItemCount() - videos.size(), videos.size());
-                        Log.d("TEST", "AM AJUNS AICI");
+                        adapter.addVideos(videos);
                     }
                 });
             }
@@ -150,7 +157,7 @@ public class VideosListFragment extends Fragment implements VideosListResponse {
     }
 
     public void showError() {
-        root.findViewById(R.id.error_text).setVisibility(View.VISIBLE);
+        root.findViewById(R.id.error_container).setVisibility(View.VISIBLE);
     }
 
 }
