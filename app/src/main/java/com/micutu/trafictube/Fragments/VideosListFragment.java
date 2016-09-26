@@ -87,6 +87,11 @@ public class VideosListFragment extends Fragment implements VideosListResponse {
             Log.d(TAG, " ERROR onResponse: " + extra.get("error"));
         }
 
+        if (videos.size() == 0) {
+            showNoVideos();
+            return;
+        }
+
         showVideos(videos);
     }
 
@@ -127,10 +132,9 @@ public class VideosListFragment extends Fragment implements VideosListResponse {
 
         final VideosListRecyclerAdapter adapter = new VideosListRecyclerAdapter(context, videos);
         recyclerView.setAdapter(adapter);
-
         recyclerView.setVisibility(View.VISIBLE);
 
-        if (normalVideos == null) {
+        if (normalVideos == null || videos.size() == 0) {
             return;
         }
 
@@ -141,10 +145,10 @@ public class VideosListFragment extends Fragment implements VideosListResponse {
                     @Override
                     public void onResponse(List<Video> videos, Map<String, Object> extra) {
                         Boolean haveNextPage = true;
-                        if(extra.containsKey("haveNextPage")) {
+                        if (extra.containsKey("haveNextPage")) {
                             haveNextPage = (Boolean) extra.get("haveNextPage");
                         }
-                        if(haveNextPage == false) {
+                        if (haveNextPage == false) {
                             adapter.setOnScrollEndListener(null);
                         }
 
@@ -159,6 +163,16 @@ public class VideosListFragment extends Fragment implements VideosListResponse {
         });
     }
 
+    private void showNoVideos() {
+        root.findViewById(R.id.search_no_results).setVisibility(View.VISIBLE);
+        root.findViewById(R.id.search_again_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((OnSearchDialogShow) getActivity()).showSearchDialog();
+            }
+        });
+    }
+
     public void showError() {
         root.findViewById(R.id.error_container).setVisibility(View.VISIBLE);
         root.findViewById(R.id.retry_button).setOnClickListener(new View.OnClickListener() {
@@ -169,6 +183,10 @@ public class VideosListFragment extends Fragment implements VideosListResponse {
                 loadVideos();
             }
         });
+    }
+
+    public interface OnSearchDialogShow {
+        public void showSearchDialog();
     }
 
 }

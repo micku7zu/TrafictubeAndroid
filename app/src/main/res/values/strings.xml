@@ -11,6 +11,9 @@
     <string name="viewUserDescription">Vezi clipurile utilizatorului</string>
     <string name="thumbsUpDescription">Votează</string>
     <string name="playButtonDescription">Pornește clip</string>
-    <string name="dialog_title">Caută</string>
+    <string name="search_dialog_title">Caută</string>
     <string name="cancel">Renunță</string>
+    <string name="search_no_results">Nu am găsit nici un video :(</string>
+    <string name="retry_text">Reîncarcă</string>
+    <string name="about_application_text">Despre aplicatie</string>
 </resources>

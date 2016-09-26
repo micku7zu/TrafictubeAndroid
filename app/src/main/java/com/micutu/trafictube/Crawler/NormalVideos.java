@@ -110,6 +110,10 @@ public class NormalVideos {
     public static List<Video> getLatestVideosFromPageContent(String content) {
         List<Video> videos = new ArrayList<Video>();
 
+        if(content.contains("page-description\">Niciun video")) {
+            return videos;
+        }
+
         try {
             content = content.split("class=\"latest-clips\">")[1].split("<footer")[0];
         } catch (Exception e) {

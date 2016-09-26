@@ -4,9 +4,11 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.micutu.trafictube.Adapters.ViewHolders.LoadingListViewHolder;
 import com.micutu.trafictube.Adapters.ViewHolders.VideosListViewHolder;
@@ -42,7 +44,7 @@ public class VideosListRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> 
 
     @Override
     public int getItemViewType(int position) {
-        if(position == this.getItemCount() - 1) {
+        if (position == this.getItemCount() - 1) {
             return LOADING_TYPE;
         }
 
@@ -51,7 +53,7 @@ public class VideosListRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> 
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if(viewType == LOADING_TYPE) {
+        if (viewType == LOADING_TYPE) {
             return new LoadingListViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.loading_list_view_holder, parent, false));
         }
 
@@ -60,8 +62,8 @@ public class VideosListRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> 
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        if(getItemViewType(position) == LOADING_TYPE) {
-            if(this.onScrollEndListener == null) {
+        if (getItemViewType(position) == LOADING_TYPE) {
+            if (this.onScrollEndListener == null) {
                 holder.itemView.findViewById(R.id.loading_list_progress_bar).setVisibility(View.GONE);
                 holder.itemView.findViewById(R.id.finishedText).setVisibility(View.VISIBLE);
             }

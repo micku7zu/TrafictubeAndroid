@@ -16,9 +16,10 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 
+import com.micutu.trafictube.Fragments.AboutFragment;
 import com.micutu.trafictube.Fragments.VideosListFragment;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements VideosListFragment.OnSearchDialogShow, NavigationView.OnNavigationItemSelectedListener {
     private final static String TAG = MainActivity.class.getSimpleName();
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
@@ -63,14 +64,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         fragment.setArguments(args);
+        showFragment(fragment);
+        navigationView.getMenu().findItem(itemId).setChecked(true);
+        drawerLayout.closeDrawers();
+    }
 
+    private void showAboutFragment() {
+        showFragment(new AboutFragment());
+        navigationView.getMenu().findItem(R.id.about).setChecked(true);
+        drawerLayout.closeDrawers();
+    }
+
+    private void showFragment(Fragment fragment) {
         getFragmentManager().beginTransaction()
                 .setCustomAnimations(R.animator.fade_in, R.animator.fade_out)
                 .replace(R.id.frame_layout, fragment)
                 .commit();
-
-        navigationView.getMenu().findItem(itemId).setChecked(true);
-        drawerLayout.closeDrawers();
     }
 
     @Override
@@ -79,20 +88,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.search:
                 this.showSearchDialog();
                 return false;
-
+            case R.id.about:
+                this.showAboutFragment();
+                return false;
         }
 
         switchFragment(item.getItemId());
         return false;
     }
 
+    @Override
     public void showSearchDialog() {
-
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final View searchDialog = this.getLayoutInflater().inflate(R.layout.search_dialog_content, null);
-        builder.setTitle(R.string.dialog_title)
+        builder.setTitle(R.string.search_dialog_title)
                 .setView(searchDialog)
-                .setPositiveButton(getResources().getString(R.string.dialog_title), new DialogInterface.OnClickListener() {
+                .setPositiveButton(getResources().getString(R.string.search_dialog_title), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         EditText searchEditText = (EditText) searchDialog.findViewById(R.id.search_edit_text);
