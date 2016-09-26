@@ -29,6 +29,7 @@ import java.util.Map;
 public class VideosListFragment extends Fragment implements VideosListResponse {
     private final static String TAG = VideosListFragment.class.getSimpleName();
     public static final String MENU_ID = "menu_id";
+    public static final String SEARCH = "search";
 
     private View root;
     private Context context;
@@ -56,7 +57,7 @@ public class VideosListFragment extends Fragment implements VideosListResponse {
                 normalVideos.getVideos(context, this);
                 break;
             case R.id.search:
-                normalVideos = new NormalVideos("Bihor");
+                normalVideos = new NormalVideos(getArguments().getString(SEARCH));
                 normalVideos.getVideos(context, this);
                 break;
             case R.id.top_general:
