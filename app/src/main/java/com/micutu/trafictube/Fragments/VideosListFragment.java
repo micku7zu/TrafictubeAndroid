@@ -15,6 +15,7 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
 import com.micutu.trafictube.Adapters.VideosListRecyclerAdapter;
+import com.micutu.trafictube.Adapters.ViewHolders.VideosListViewHolder;
 import com.micutu.trafictube.Crawler.NormalVideos;
 import com.micutu.trafictube.Crawler.TopVideosSingleton;
 import com.micutu.trafictube.Crawler.VideosListResponse;
@@ -30,6 +31,7 @@ public class VideosListFragment extends Fragment implements VideosListResponse {
     private final static String TAG = VideosListFragment.class.getSimpleName();
     public static final String MENU_ID = "menu_id";
     public static final String SEARCH = "search";
+    public static final String USERNAME = "username";
 
     private View root;
     private Context context;
@@ -57,7 +59,11 @@ public class VideosListFragment extends Fragment implements VideosListResponse {
                 normalVideos.getVideos(context, this);
                 break;
             case R.id.search:
-                normalVideos = new NormalVideos(getArguments().getString(SEARCH));
+                normalVideos = new NormalVideos(NormalVideos.MODE_SEARCH, getArguments().getString(SEARCH));
+                normalVideos.getVideos(context, this);
+                break;
+            case R.id.user_videos:
+                normalVideos = new NormalVideos(NormalVideos.MODE_USER, getArguments().getString(USERNAME));
                 normalVideos.getVideos(context, this);
                 break;
             case R.id.top_general:
@@ -92,7 +98,7 @@ public class VideosListFragment extends Fragment implements VideosListResponse {
             return;
         }
 
-        showVideos(videos);
+        showVideos(videos, extra);
     }
 
     @Override
@@ -124,17 +130,17 @@ public class VideosListFragment extends Fragment implements VideosListResponse {
         toolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
     }
 
-    private void showVideos(List<Video> videos) {
+    private void showVideos(List<Video> videos, Map<String, Object> extra) {
         RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
-        final VideosListRecyclerAdapter adapter = new VideosListRecyclerAdapter(context, videos);
+        final VideosListRecyclerAdapter adapter = new VideosListRecyclerAdapter(((VideosListViewHolder.ViewUserVideosListener) getActivity()), context, videos);
         recyclerView.setAdapter(adapter);
         recyclerView.setVisibility(View.VISIBLE);
 
-        if (normalVideos == null || videos.size() == 0) {
+        if (!extra.containsKey("haveNextPage") || ((Boolean) extra.get("haveNextPage")) == false) {
             return;
         }
 
@@ -148,6 +154,8 @@ public class VideosListFragment extends Fragment implements VideosListResponse {
                         if (extra.containsKey("haveNextPage")) {
                             haveNextPage = (Boolean) extra.get("haveNextPage");
                         }
+
+                        Log.d("TEST", "HAVE NEXT PAGE:" + haveNextPage);
                         if (haveNextPage == false) {
                             adapter.setOnScrollEndListener(null);
                         }

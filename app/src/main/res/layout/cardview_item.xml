@@ -68,7 +68,7 @@
                 android:textSize="12sp" />
 
             <com.micutu.trafictube.Views.AppCompatImageButtonWithTooltip
-                android:id="@+id/viewUser"
+                android:id="@+id/view_user"
                 android:layout_width="@dimen/icon_width"
                 android:layout_height="@dimen/icon_height"
                 android:background="?attr/selectableItemBackgroundBorderless"
@@ -77,7 +77,7 @@
                 android:src="@drawable/ic_user" />
 
             <com.micutu.trafictube.Views.AppCompatImageButtonWithTooltip
-                android:id="@+id/thumbsUp"
+                android:id="@+id/thumbs_up"
                 android:layout_width="@dimen/icon_width"
                 android:layout_height="@dimen/icon_height"
                 android:background="?attr/selectableItemBackgroundBorderless"
@@ -86,7 +86,7 @@
                 android:src="@drawable/ic_thumbs_up" />
 
             <com.micutu.trafictube.Views.AppCompatImageButtonWithTooltip
-                android:id="@+id/playButton"
+                android:id="@+id/play_button"
                 android:layout_width="@dimen/icon_width"
                 android:layout_height="@dimen/icon_height"
                 android:background="?attr/selectableItemBackgroundBorderless"

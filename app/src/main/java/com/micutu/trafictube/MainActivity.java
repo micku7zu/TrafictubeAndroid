@@ -10,16 +10,19 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 
+import com.micutu.trafictube.Adapters.ViewHolders.VideosListViewHolder;
+import com.micutu.trafictube.Data.User;
 import com.micutu.trafictube.Fragments.AboutFragment;
 import com.micutu.trafictube.Fragments.VideosListFragment;
 
-public class MainActivity extends AppCompatActivity implements VideosListFragment.OnSearchDialogShow, NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements VideosListViewHolder.ViewUserVideosListener, VideosListFragment.OnSearchDialogShow, NavigationView.OnNavigationItemSelectedListener {
     private final static String TAG = MainActivity.class.getSimpleName();
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
@@ -115,5 +118,18 @@ public class MainActivity extends AppCompatActivity implements VideosListFragmen
         AlertDialog dialog = builder.create();
         dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         dialog.show();
+    }
+
+    @Override
+    public void showUserVideos(User user) {
+        Fragment fragment = new VideosListFragment();
+        Bundle args = new Bundle();
+        args.putInt(VideosListFragment.MENU_ID, R.id.user_videos);
+        args.putString(VideosListFragment.USERNAME, user.getUsername());
+
+        fragment.setArguments(args);
+        showFragment(fragment);
+        navigationView.getMenu().findItem(R.id.user_videos).setChecked(true);
+        drawerLayout.closeDrawers();
     }
 }

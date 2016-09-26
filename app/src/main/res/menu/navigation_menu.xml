@@ -3,6 +3,7 @@
     <group
         android:id="@+id/menu_top"
         android:checkableBehavior="single">
+        <item android:id="@+id/user_videos" android:visible="false"/>
         <item
             android:id="@+id/latest"
             android:checked="true"

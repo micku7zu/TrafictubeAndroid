@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.micutu.trafictube.Adapters.ViewHolders.LoadingListViewHolder;
 import com.micutu.trafictube.Adapters.ViewHolders.VideosListViewHolder;
 import com.micutu.trafictube.Data.Video;
+import com.micutu.trafictube.Fragments.VideosListFragment;
 import com.micutu.trafictube.R;
 
 import java.util.List;
@@ -24,11 +25,13 @@ public class VideosListRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> 
     private List<Video> videos = null;
     private Context context = null;
     private OnScrollEndListener onScrollEndListener = null;
+    private VideosListViewHolder.ViewUserVideosListener viewUserVideosListener = null;
 
-    public VideosListRecyclerAdapter(Context context, List<Video> videos) {
+    public VideosListRecyclerAdapter(VideosListViewHolder.ViewUserVideosListener viewUserVideosListener, Context context, List<Video> videos) {
         this.videos = videos;
         this.context = context;
         this.onScrollEndListener = null;
+        this.viewUserVideosListener = viewUserVideosListener;
     }
 
     public void setOnScrollEndListener(OnScrollEndListener onScrollEndListener) {
@@ -57,7 +60,7 @@ public class VideosListRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> 
             return new LoadingListViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.loading_list_view_holder, parent, false));
         }
 
-        return new VideosListViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_item, parent, false));
+        return new VideosListViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_item, parent, false), this.viewUserVideosListener);
     }
 
     @Override
@@ -75,6 +78,7 @@ public class VideosListRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> 
         videosListViewHolder.setTitle(String.valueOf(Html.fromHtml(video.getTitle())));
         videosListViewHolder.setMore(this.getMoreText(video));
         videosListViewHolder.setImage(this.context, video.getImage());
+        videosListViewHolder.setUser(video.getUser());
 
         if (this.onScrollEndListener != null && (position >= getItemCount() - 2)) {
             this.onScrollEndListener.loadVideos();

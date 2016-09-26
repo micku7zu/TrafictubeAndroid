@@ -19,35 +19,41 @@ import java.util.List;
 public class NormalVideos {
     private final static String TAG = NormalVideos.class.getSimpleName();
 
-    private String search = null;
+    public static final int MODE_NORMAL = 0;
+    public static final int MODE_SEARCH = 1;
+    public static final int MODE_USER = 2;
+
+    private Integer mode = null;
+    private String value = null;
     private Integer page = null;
     private Boolean haveNextPage = null;
 
     public NormalVideos() {
-        this(1, null);
+        this(1, MODE_NORMAL, null);
     }
 
-    public NormalVideos(String search) {
-        this(1, search);
+    public NormalVideos(Integer mode, String value) {
+        this(1, mode, value);
     }
 
-    public NormalVideos(int page, String search) {
+    public NormalVideos(Integer page, Integer mode, String value) {
         this.page = page;
         this.haveNextPage = true;
-        this.search = search;
+        this.mode = mode;
+        this.value = value;
     }
 
     public void getVideos(Context context, final VideosListResponse listener) {
-        getVideos(context, getPage(), getSearch(), listener);
+        getVideos(context, getPage(), getMode(), getValue(), listener);
         nextPage();
     }
 
-    public void getVideos(Context context, Integer page, String search, final VideosListResponse listener) {
+    public void getVideos(Context context, Integer page, Integer mode, String value, final VideosListResponse listener) {
         if (listener == null) {
             return;
         }
 
-        String link = getPageUrl(page, search);
+        String link = getPageUrl(page, mode, value);
         Log.d(TAG, "Request, page:" + page + " - link:" + link);
 
         StringRequest request = new StringRequest(Request.Method.GET, link,
@@ -61,6 +67,7 @@ public class NormalVideos {
                             if (videos.size() >= 20) { //only if we have more than 20 videos we need to chck if we have more pages
                                 NormalVideos.this.haveNextPage = haveMorePageFromPageContent(response);
                             }
+                            Log.d("TEST", "HAVE NEXT PAGE1: " + videos.size() +  " - " + NormalVideos.this.haveNextPage);
 
                             listener.onResponse(videos, (new HashMap<String, Object>() {{
                                 put("haveNextPage", NormalVideos.this.haveNextPage);
@@ -91,26 +98,31 @@ public class NormalVideos {
         return Site.link + "/page/" + page;
     }
 
-    private static String getPageUrl(int page, String search) {
-        if (search == null || search.length() == 0) {
+    private static String getPageUrl(int page, int mode, String value) {
+        if (value == null || value.length() == 0) {
             return getPageUrl(page);
         }
 
-        String encoded = search;
+        String encoded = value;
 
         try {
-            encoded = URLEncoder.encode(search, "UTF-8");
+            encoded = URLEncoder.encode(value, "UTF-8");
         } catch (Exception e) {
-
         }
 
-        return Site.link + "/page/" + page + "/?s=" + encoded;
+        if (mode == MODE_SEARCH) {
+            return Site.link + "/page/" + page + "/?s=" + encoded;
+        } else if (mode == MODE_USER) {
+            return Site.link + "/author/" + value + "/page/" + page + "/";
+        }
+
+        return "";
     }
 
     public static List<Video> getLatestVideosFromPageContent(String content) {
         List<Video> videos = new ArrayList<Video>();
 
-        if(content.contains("page-description\">Niciun video")) {
+        if (content.contains("page-description\">Niciun video")) {
             return videos;
         }
 
@@ -162,11 +174,19 @@ public class NormalVideos {
         this.setPage(this.getPage() + 1);
     }
 
-    public String getSearch() {
-        return search;
+    public String getValue() {
+        return value;
     }
 
-    public void setSearch(String search) {
-        this.search = search;
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public Integer getMode() {
+        return mode;
+    }
+
+    public void setMode(Integer mode) {
+        this.mode = mode;
     }
 }
