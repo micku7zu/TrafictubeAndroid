@@ -16,9 +16,11 @@ import android.view.animation.DecelerateInterpolator;
 
 import com.micutu.trafictube.Adapters.VideosListRecyclerAdapter;
 import com.micutu.trafictube.Adapters.ViewHolders.VideosListViewHolder;
+import com.micutu.trafictube.Adapters.ViewHolders.VideosListViewHolder.ViewUserVideosListener;
 import com.micutu.trafictube.Crawler.NormalVideos;
 import com.micutu.trafictube.Crawler.TopVideosSingleton;
 import com.micutu.trafictube.Crawler.VideosListResponse;
+import com.micutu.trafictube.Data.User;
 import com.micutu.trafictube.Data.Video;
 import com.micutu.trafictube.R;
 import com.micutu.trafictube.Views.HidingScrollListener;
@@ -136,7 +138,12 @@ public class VideosListFragment extends Fragment implements VideosListResponse {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
-        final VideosListRecyclerAdapter adapter = new VideosListRecyclerAdapter(((VideosListViewHolder.ViewUserVideosListener) getActivity()), context, videos);
+        ViewUserVideosListener onViewUserVideosListener = null;
+        if(getActivity() instanceof ViewUserVideosListener) {
+            onViewUserVideosListener = (ViewUserVideosListener) getActivity();
+        }
+
+        final VideosListRecyclerAdapter adapter = new VideosListRecyclerAdapter(onViewUserVideosListener, context, videos);
         recyclerView.setAdapter(adapter);
         recyclerView.setVisibility(View.VISIBLE);
 
@@ -155,7 +162,6 @@ public class VideosListFragment extends Fragment implements VideosListResponse {
                             haveNextPage = (Boolean) extra.get("haveNextPage");
                         }
 
-                        Log.d("TEST", "HAVE NEXT PAGE:" + haveNextPage);
                         if (haveNextPage == false) {
                             adapter.setOnScrollEndListener(null);
                         }

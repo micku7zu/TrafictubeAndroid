@@ -16,4 +16,7 @@
     <string name="search_no_results">Nu am găsit nici un video :(</string>
     <string name="retry_text">Reîncarcă</string>
     <string name="about_application_text">Despre aplicatie</string>
+    <string name="main_activity_label">Trafictube</string>
+    <string name="user_videos_activity_label">Clipurile utilizatorului</string>
+    <string name="user_videos_of">Clipurile lui</string>
 </resources>

@@ -1,6 +1,7 @@
-package com.micutu.trafictube;
+package com.micutu.trafictube.Activities;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.app.Fragment;
@@ -10,8 +11,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -21,6 +20,7 @@ import com.micutu.trafictube.Adapters.ViewHolders.VideosListViewHolder;
 import com.micutu.trafictube.Data.User;
 import com.micutu.trafictube.Fragments.AboutFragment;
 import com.micutu.trafictube.Fragments.VideosListFragment;
+import com.micutu.trafictube.R;
 
 public class MainActivity extends AppCompatActivity implements VideosListViewHolder.ViewUserVideosListener, VideosListFragment.OnSearchDialogShow, NavigationView.OnNavigationItemSelectedListener {
     private final static String TAG = MainActivity.class.getSimpleName();
@@ -122,14 +122,9 @@ public class MainActivity extends AppCompatActivity implements VideosListViewHol
 
     @Override
     public void showUserVideos(User user) {
-        Fragment fragment = new VideosListFragment();
-        Bundle args = new Bundle();
-        args.putInt(VideosListFragment.MENU_ID, R.id.user_videos);
-        args.putString(VideosListFragment.USERNAME, user.getUsername());
-
-        fragment.setArguments(args);
-        showFragment(fragment);
-        navigationView.getMenu().findItem(R.id.user_videos).setChecked(true);
-        drawerLayout.closeDrawers();
+        Intent intent = new Intent(this, UserVideosActivity.class);
+        intent.putExtra(UserVideosActivity.USERNAME, user.getUsername());
+        intent.putExtra(UserVideosActivity.USER_NAME, user.getName());
+        startActivity(intent);
     }
 }

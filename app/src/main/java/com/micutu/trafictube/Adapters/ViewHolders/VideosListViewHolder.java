@@ -29,9 +29,14 @@ public class VideosListViewHolder extends RecyclerView.ViewHolder implements Vie
         this.more = (TextView) itemView.findViewById(R.id.more);
         this.image = (NetworkImageView) itemView.findViewById(R.id.image);
 
-        ((AppCompatImageButtonWithTooltip) itemView.findViewById(R.id.view_user)).setOnClickListener(this);
         ((AppCompatImageButtonWithTooltip) itemView.findViewById(R.id.thumbs_up)).setOnClickListener(this);
         ((AppCompatImageButtonWithTooltip) itemView.findViewById(R.id.play_button)).setOnClickListener(this);
+
+        if (this.viewUserVideosListener == null) {
+            ((AppCompatImageButtonWithTooltip) itemView.findViewById(R.id.view_user)).setVisibility(View.GONE);
+        } else {
+            ((AppCompatImageButtonWithTooltip) itemView.findViewById(R.id.view_user)).setOnClickListener(this);
+        }
     }
 
     public void setTitle(String text) {
