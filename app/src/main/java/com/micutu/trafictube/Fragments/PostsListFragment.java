@@ -84,6 +84,7 @@ public class PostsListFragment extends Fragment implements PostsListResponse {
         //if we get no posts, show the error
         if (posts == null) {
             this.showError();
+            return;
         }
 
         /* log the error */
@@ -143,7 +144,7 @@ public class PostsListFragment extends Fragment implements PostsListResponse {
         recyclerView.setAdapter(adapter);
         recyclerView.setVisibility(View.VISIBLE);
 
-        if (!extra.containsKey("haveNextPage") || ((Boolean) extra.get("haveNextPage")) == false) {
+        if (!extra.containsKey("haveNextPage") || !((Boolean) extra.get("haveNextPage"))) {
             return;
         }
 
@@ -158,7 +159,7 @@ public class PostsListFragment extends Fragment implements PostsListResponse {
                             haveNextPage = (Boolean) extra.get("haveNextPage");
                         }
 
-                        if (haveNextPage == false) {
+                        if (!haveNextPage) {
                             adapter.setOnScrollEndListener(null);
                         }
 
@@ -196,7 +197,7 @@ public class PostsListFragment extends Fragment implements PostsListResponse {
     }
 
     public interface OnSearchDialogShow {
-        public void showSearchDialog();
+        void showSearchDialog();
     }
 
 }

@@ -4,6 +4,6 @@ import com.micutu.trafictube.Data.Post;
 
 import java.util.Map;
 
-public interface PostResponse {
-    public void onResponse(Post post, Map<String, Object> extra);
+interface PostResponse {
+    void onResponse(Post post, Map<String, Object> extra);
 }

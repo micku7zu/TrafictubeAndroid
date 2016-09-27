@@ -1,5 +1,6 @@
 package com.micutu.trafictube.Activities;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -103,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements PostsListViewHold
     @Override
     public void showSearchDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        final View searchDialog = this.getLayoutInflater().inflate(R.layout.search_dialog_content, null);
+        @SuppressLint("InflateParams") final View searchDialog = this.getLayoutInflater().inflate(R.layout.search_dialog_content, null);
         builder.setTitle(R.string.search_dialog_title)
                 .setView(searchDialog)
                 .setPositiveButton(getResources().getString(R.string.search_dialog_title), new DialogInterface.OnClickListener() {
