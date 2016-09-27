@@ -25,6 +25,9 @@ import com.micutu.trafictube.R;
 
 public class MainActivity extends AppCompatActivity implements PostsListViewHolder.ViewUserPostsListener, PostsListFragment.OnSearchDialogShow, NavigationView.OnNavigationItemSelectedListener {
     private final static String TAG = MainActivity.class.getSimpleName();
+
+    public static String YOUTUBE_DEVELOPER_KEY = "AIzaSyBfF9G0xNvqZSg_h81X67jGqt5rAxFNWqs";
+
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
