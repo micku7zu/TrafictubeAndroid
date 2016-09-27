@@ -77,6 +77,7 @@ public class PostsListRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
         postsListViewHolder.setImage(this.context, post.getImage());
         postsListViewHolder.setUser(post.getUser());
         postsListViewHolder.setContext(context);
+        postsListViewHolder.setPost(post);
 
         if (this.onScrollEndListener != null && (position >= getItemCount() - 2)) {
             this.onScrollEndListener.loadPosts();

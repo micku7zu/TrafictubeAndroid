@@ -32,11 +32,11 @@ public class GetPostSingleton {
                 try {
                     videoResponse.onResponse(getVideoFromPostPage(response), new HashMap<String, Object>());
                 } catch (final Exception e) {
-                    videoResponse.onResponse(null, (new HashMap<String, Object>() {{
-                        put("error", Log.getStackTraceString(e));
-                    }}));
+                    System.out.println(response);
+                    //videoResponse.onResponse(null, (new HashMap<String, Object>() {{
+                    //    put("error", Log.getStackTraceString(e));
+                    //}}));
                 }
-                videoResponse.onResponse(null, null);
             }
         }, new com.android.volley.Response.ErrorListener() {
             @Override
