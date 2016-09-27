@@ -6,7 +6,7 @@ import android.content.Context;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.micutu.trafictube.Data.VideoPost;
+import com.micutu.trafictube.Data.Video;
 
 import java.util.HashMap;
 
@@ -37,15 +37,15 @@ public class GetVideoSingleton {
         VolleySingleton.makeRequest(context, request);
     }
 
-    private static VideoPost parseVideoPage(String content) {
+    private static Video parseVideoPage(String content) {
         if(!content.contains("the-main-videoPost")) {
             return null;
         }
 
-        VideoPost videoPost = new VideoPost();
+        Video video = new Video();
 
 
-        return videoPost;
+        return video;
     }
 
 }
