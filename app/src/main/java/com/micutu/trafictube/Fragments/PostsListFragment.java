@@ -3,7 +3,6 @@ package com.micutu.trafictube.Fragments;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -14,23 +13,20 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
-import com.micutu.trafictube.Adapters.VideosListRecyclerAdapter;
-import com.micutu.trafictube.Adapters.ViewHolders.VideosListViewHolder;
-import com.micutu.trafictube.Adapters.ViewHolders.VideosListViewHolder.ViewUserVideosListener;
-import com.micutu.trafictube.Crawler.NormalVideos;
-import com.micutu.trafictube.Crawler.TopVideosSingleton;
-import com.micutu.trafictube.Crawler.VideosListResponse;
-import com.micutu.trafictube.Data.User;
-import com.micutu.trafictube.Data.Video;
+import com.micutu.trafictube.Adapters.PostsListRecyclerAdapter;
+import com.micutu.trafictube.Adapters.ViewHolders.PostsListViewHolder.ViewUserPostsListener;
+import com.micutu.trafictube.Crawler.NormalPosts;
+import com.micutu.trafictube.Crawler.TopPostsSingleton;
+import com.micutu.trafictube.Crawler.PostsListResponse;
+import com.micutu.trafictube.Data.Post;
 import com.micutu.trafictube.R;
 import com.micutu.trafictube.Views.HidingScrollListener;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class VideosListFragment extends Fragment implements VideosListResponse {
-    private final static String TAG = VideosListFragment.class.getSimpleName();
+public class PostsListFragment extends Fragment implements PostsListResponse {
+    private final static String TAG = PostsListFragment.class.getSimpleName();
     public static final String MENU_ID = "menu_id";
     public static final String SEARCH = "search";
     public static final String USERNAME = "username";
@@ -38,55 +34,55 @@ public class VideosListFragment extends Fragment implements VideosListResponse {
     private View root;
     private Context context;
     private Toolbar toolbar;
-    private NormalVideos normalVideos = null;
+    private NormalPosts normalPosts = null;
     private Integer menuId = null;
 
-    public VideosListFragment() {
+    public PostsListFragment() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         this.context = inflater.getContext();
         this.menuId = getArguments().getInt(MENU_ID);
-        root = inflater.inflate(R.layout.videos_list_fragment, container, false);
-        loadVideos();
+        root = inflater.inflate(R.layout.posts_list_fragment, container, false);
+        loadPosts();
         return root;
     }
 
-    private void loadVideos() {
-        normalVideos = null;
+    private void loadPosts() {
+        normalPosts = null;
         switch (menuId) {
             case R.id.latest:
-                normalVideos = new NormalVideos();
-                normalVideos.getVideos(context, this);
+                normalPosts = new NormalPosts();
+                normalPosts.getPosts(context, this);
                 break;
             case R.id.search:
-                normalVideos = new NormalVideos(NormalVideos.MODE_SEARCH, getArguments().getString(SEARCH));
-                normalVideos.getVideos(context, this);
+                normalPosts = new NormalPosts(NormalPosts.MODE_SEARCH, getArguments().getString(SEARCH));
+                normalPosts.getPosts(context, this);
                 break;
-            case R.id.user_videos:
-                normalVideos = new NormalVideos(NormalVideos.MODE_USER, getArguments().getString(USERNAME));
-                normalVideos.getVideos(context, this);
+            case R.id.user_posts:
+                normalPosts = new NormalPosts(NormalPosts.MODE_USER, getArguments().getString(USERNAME));
+                normalPosts.getPosts(context, this);
                 break;
             case R.id.top_general:
-                TopVideosSingleton.getGeneralTopVideos(context, this);
+                TopPostsSingleton.getGeneralTopPosts(context, this);
                 break;
             case R.id.top_two_days:
-                TopVideosSingleton.getTwoDaysTopVideos(context, this);
+                TopPostsSingleton.getTwoDaysTopPosts(context, this);
                 break;
             case R.id.top_weekly:
-                TopVideosSingleton.getWeeklyTopVideos(context, this);
+                TopPostsSingleton.getWeeklyTopPosts(context, this);
                 break;
         }
     }
 
     @Override
-    public void onResponse(List<Video> videos, Map<String, Object> extra) {
+    public void onResponse(List<Post> posts, Map<String, Object> extra) {
         //hide the loading even if it's an error
         root.findViewById(R.id.progress_bar).setVisibility(View.GONE);
 
-        //if we get no videos, show the error
-        if (videos == null) {
+        //if we get no posts, show the error
+        if (posts == null) {
             this.showError();
         }
 
@@ -95,12 +91,12 @@ public class VideosListFragment extends Fragment implements VideosListResponse {
             Log.d(TAG, " ERROR onResponse: " + extra.get("error"));
         }
 
-        if (videos.size() == 0) {
-            showNoVideos();
+        if (posts.size() == 0) {
+            showNoPosts();
             return;
         }
 
-        showVideos(videos, extra);
+        showPosts(posts, extra);
     }
 
     @Override
@@ -132,18 +128,18 @@ public class VideosListFragment extends Fragment implements VideosListResponse {
         toolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
     }
 
-    private void showVideos(List<Video> videos, Map<String, Object> extra) {
+    private void showPosts(List<Post> posts, Map<String, Object> extra) {
         RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
-        ViewUserVideosListener onViewUserVideosListener = null;
-        if(getActivity() instanceof ViewUserVideosListener) {
-            onViewUserVideosListener = (ViewUserVideosListener) getActivity();
+        ViewUserPostsListener onViewUserPostsListener = null;
+        if(getActivity() instanceof ViewUserPostsListener) {
+            onViewUserPostsListener = (ViewUserPostsListener) getActivity();
         }
 
-        final VideosListRecyclerAdapter adapter = new VideosListRecyclerAdapter(onViewUserVideosListener, context, videos);
+        final PostsListRecyclerAdapter adapter = new PostsListRecyclerAdapter(onViewUserPostsListener, context, posts);
         recyclerView.setAdapter(adapter);
         recyclerView.setVisibility(View.VISIBLE);
 
@@ -151,12 +147,12 @@ public class VideosListFragment extends Fragment implements VideosListResponse {
             return;
         }
 
-        adapter.setOnScrollEndListener(new VideosListRecyclerAdapter.OnScrollEndListener() {
+        adapter.setOnScrollEndListener(new PostsListRecyclerAdapter.OnScrollEndListener() {
             @Override
-            public void loadVideos() {
-                normalVideos.getVideos(context, new VideosListResponse() {
+            public void loadPosts() {
+                normalPosts.getPosts(context, new PostsListResponse() {
                     @Override
-                    public void onResponse(List<Video> videos, Map<String, Object> extra) {
+                    public void onResponse(List<Post> posts, Map<String, Object> extra) {
                         Boolean haveNextPage = true;
                         if (extra.containsKey("haveNextPage")) {
                             haveNextPage = (Boolean) extra.get("haveNextPage");
@@ -166,18 +162,18 @@ public class VideosListFragment extends Fragment implements VideosListResponse {
                             adapter.setOnScrollEndListener(null);
                         }
 
-                        if (videos == null) {
+                        if (posts == null) {
                             return;
                         }
 
-                        adapter.addVideos(videos);
+                        adapter.addPosts(posts);
                     }
                 });
             }
         });
     }
 
-    private void showNoVideos() {
+    private void showNoPosts() {
         root.findViewById(R.id.search_no_results).setVisibility(View.VISIBLE);
         root.findViewById(R.id.search_again_button).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -194,7 +190,7 @@ public class VideosListFragment extends Fragment implements VideosListResponse {
             public void onClick(View view) {
                 root.findViewById(R.id.error_container).setVisibility(View.GONE);
                 root.findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
-                loadVideos();
+                loadPosts();
             }
         });
     }

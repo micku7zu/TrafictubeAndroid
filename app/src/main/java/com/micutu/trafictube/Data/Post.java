@@ -2,7 +2,7 @@ package com.micutu.trafictube.Data;
 
 import java.util.List;
 
-public class Video {
+public class Post {
     private String title = null;
     private User user = null;
     private Integer votes = null;

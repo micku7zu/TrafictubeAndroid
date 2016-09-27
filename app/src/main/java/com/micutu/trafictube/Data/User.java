@@ -4,7 +4,7 @@ public class User {
     private String name = null;
     private String username = null;
     private String avatar = null;
-    private Integer numberOfVideos = null;
+    private Integer numberOfPosts = null;
     private String cameraName = null;
 
     public String getName() {
@@ -23,12 +23,12 @@ public class User {
         this.username = username;
     }
 
-    public Integer getNumberOfVideos() {
-        return numberOfVideos;
+    public Integer getNumberOfPosts() {
+        return numberOfPosts;
     }
 
-    public void setNumberOfVideos(Integer numberOfVideos) {
-        this.numberOfVideos = numberOfVideos;
+    public void setNumberOfPosts(Integer numberOfPosts) {
+        this.numberOfPosts = numberOfPosts;
     }
 
 

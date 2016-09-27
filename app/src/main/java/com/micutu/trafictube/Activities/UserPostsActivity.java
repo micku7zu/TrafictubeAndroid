@@ -9,10 +9,10 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 
-import com.micutu.trafictube.Fragments.VideosListFragment;
+import com.micutu.trafictube.Fragments.PostsListFragment;
 import com.micutu.trafictube.R;
 
-public class UserVideosActivity extends AppCompatActivity {
+public class UserPostsActivity extends AppCompatActivity {
     public static final String USERNAME = "username";
     public static final String USER_NAME = "name";
 
@@ -21,13 +21,13 @@ public class UserVideosActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_videos_activity);
+        setContentView(R.layout.user_posts_activity);
         init();
 
-        Fragment fragment = new VideosListFragment();
+        Fragment fragment = new PostsListFragment();
         Bundle args = new Bundle();
-        args.putInt(VideosListFragment.MENU_ID, R.id.user_videos);
-        args.putString(VideosListFragment.USERNAME, getIntent().getStringExtra(USERNAME));
+        args.putInt(PostsListFragment.MENU_ID, R.id.user_posts);
+        args.putString(PostsListFragment.USERNAME, getIntent().getStringExtra(USERNAME));
 
         fragment.setArguments(args);
         getFragmentManager().beginTransaction()
@@ -40,7 +40,7 @@ public class UserVideosActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(getResources().getString(R.string.user_videos_of) + " " + getIntent().getStringExtra(USER_NAME));
+        getSupportActionBar().setTitle(getResources().getString(R.string.user_posts_of) + " " + getIntent().getStringExtra(USER_NAME));
     }
 
     @Override

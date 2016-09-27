@@ -16,13 +16,13 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 
-import com.micutu.trafictube.Adapters.ViewHolders.VideosListViewHolder;
+import com.micutu.trafictube.Adapters.ViewHolders.PostsListViewHolder;
 import com.micutu.trafictube.Data.User;
 import com.micutu.trafictube.Fragments.AboutFragment;
-import com.micutu.trafictube.Fragments.VideosListFragment;
+import com.micutu.trafictube.Fragments.PostsListFragment;
 import com.micutu.trafictube.R;
 
-public class MainActivity extends AppCompatActivity implements VideosListViewHolder.ViewUserVideosListener, VideosListFragment.OnSearchDialogShow, NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements PostsListViewHolder.ViewUserPostsListener, PostsListFragment.OnSearchDialogShow, NavigationView.OnNavigationItemSelectedListener {
     private final static String TAG = MainActivity.class.getSimpleName();
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
@@ -58,12 +58,12 @@ public class MainActivity extends AppCompatActivity implements VideosListViewHol
     }
 
     private void switchFragment(int itemId, String search) {
-        Fragment fragment = new VideosListFragment();
+        Fragment fragment = new PostsListFragment();
         Bundle args = new Bundle();
-        args.putInt(VideosListFragment.MENU_ID, itemId);
+        args.putInt(PostsListFragment.MENU_ID, itemId);
 
         if (search != null && search.length() > 0) {
-            args.putString(VideosListFragment.SEARCH, search);
+            args.putString(PostsListFragment.SEARCH, search);
         }
 
         fragment.setArguments(args);
@@ -121,10 +121,10 @@ public class MainActivity extends AppCompatActivity implements VideosListViewHol
     }
 
     @Override
-    public void showUserVideos(User user) {
-        Intent intent = new Intent(this, UserVideosActivity.class);
-        intent.putExtra(UserVideosActivity.USERNAME, user.getUsername());
-        intent.putExtra(UserVideosActivity.USER_NAME, user.getName());
+    public void showUserPosts(User user) {
+        Intent intent = new Intent(this, UserPostsActivity.class);
+        intent.putExtra(UserPostsActivity.USERNAME, user.getUsername());
+        intent.putExtra(UserPostsActivity.USER_NAME, user.getName());
         startActivity(intent);
     }
 }

@@ -9,15 +9,15 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.micutu.trafictube.Data.Site;
 import com.micutu.trafictube.Data.User;
-import com.micutu.trafictube.Data.Video;
+import com.micutu.trafictube.Data.Post;
 
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class NormalVideos {
-    private final static String TAG = NormalVideos.class.getSimpleName();
+public class NormalPosts {
+    private final static String TAG = NormalPosts.class.getSimpleName();
 
     public static final int MODE_NORMAL = 0;
     public static final int MODE_SEARCH = 1;
@@ -28,27 +28,27 @@ public class NormalVideos {
     private Integer page = null;
     private Boolean haveNextPage = null;
 
-    public NormalVideos() {
+    public NormalPosts() {
         this(1, MODE_NORMAL, null);
     }
 
-    public NormalVideos(Integer mode, String value) {
+    public NormalPosts(Integer mode, String value) {
         this(1, mode, value);
     }
 
-    public NormalVideos(Integer page, Integer mode, String value) {
+    public NormalPosts(Integer page, Integer mode, String value) {
         this.page = page;
         this.haveNextPage = true;
         this.mode = mode;
         this.value = value;
     }
 
-    public void getVideos(Context context, final VideosListResponse listener) {
-        getVideos(context, getPage(), getMode(), getValue(), listener);
+    public void getPosts(Context context, final PostsListResponse listener) {
+        getPosts(context, getPage(), getMode(), getValue(), listener);
         nextPage();
     }
 
-    public void getVideos(Context context, Integer page, Integer mode, String value, final VideosListResponse listener) {
+    public void getPosts(Context context, Integer page, Integer mode, String value, final PostsListResponse listener) {
         if (listener == null) {
             return;
         }
@@ -61,16 +61,16 @@ public class NormalVideos {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            List<Video> videos = getLatestVideosFromPageContent(response);
+                            List<Post> posts = getLatestPostsFromPageContent(response);
 
-                            NormalVideos.this.haveNextPage = false;
-                            if (videos.size() >= 20) { //only if we have more than 20 videos we need to chck if we have more pages
-                                NormalVideos.this.haveNextPage = haveMorePageFromPageContent(response);
+                            NormalPosts.this.haveNextPage = false;
+                            if (posts.size() >= 20) { //only if we have more than 20 posts we need to chck if we have more pages
+                                NormalPosts.this.haveNextPage = haveMorePageFromPageContent(response);
                             }
-                            Log.d("TEST", "HAVE NEXT PAGE1: " + videos.size() +  " - " + NormalVideos.this.haveNextPage);
+                            Log.d("TEST", "HAVE NEXT PAGE1: " + posts.size() +  " - " + NormalPosts.this.haveNextPage);
 
-                            listener.onResponse(videos, (new HashMap<String, Object>() {{
-                                put("haveNextPage", NormalVideos.this.haveNextPage);
+                            listener.onResponse(posts, (new HashMap<String, Object>() {{
+                                put("haveNextPage", NormalPosts.this.haveNextPage);
                             }}));
                         } catch (final Exception e) {
                             listener.onResponse(null, (new HashMap<String, Object>() {{
@@ -119,11 +119,11 @@ public class NormalVideos {
         return "";
     }
 
-    public static List<Video> getLatestVideosFromPageContent(String content) {
-        List<Video> videos = new ArrayList<Video>();
+    public static List<Post> getLatestPostsFromPageContent(String content) {
+        List<Post> posts = new ArrayList<Post>();
 
-        if (content.contains("page-description\">Niciun video")) {
-            return videos;
+        if (content.contains("page-description\">Niciun post")) {
+            return posts;
         }
 
         try {
@@ -135,23 +135,23 @@ public class NormalVideos {
         String temps[] = content.split("the-video");
 
         for (int i = 1; i < temps.length; i++) {
-            Video video = new Video();
+            Post post = new Post();
             User user = new User();
 
             /* ugly crawler */
-            video.setTitle(temps[i].split("<h3")[1].split("</a>")[0].split("\">")[2]);
-            video.setLink(temps[i].split("href=\"")[1].split("\"")[0]);
+            post.setTitle(temps[i].split("<h3")[1].split("</a>")[0].split("\">")[2]);
+            post.setLink(temps[i].split("href=\"")[1].split("\"")[0]);
             user.setName(temps[i].split("\"author\">")[1].split("</a>")[0].split("\">")[1]);
             user.setUsername(temps[i].split("\"author\">")[1].split("/\" tit")[0].split("author/")[1]);
-            video.setUser(user);
-            video.setImage(temps[i].split("background-image: url\\(")[1].split("\\);\">")[0].replaceAll("\\s+", ""));
-            video.setTimeAgo(temps[i].split("class=\"post-date\">")[1].split("</span>")[0]);
+            post.setUser(user);
+            post.setImage(temps[i].split("background-image: url\\(")[1].split("\\);\">")[0].replaceAll("\\s+", ""));
+            post.setTimeAgo(temps[i].split("class=\"post-date\">")[1].split("</span>")[0]);
 
-            videos.add(video);
+            posts.add(post);
         }
 
 
-        return videos;
+        return posts;
     }
 
     public static Boolean haveMorePageFromPageContent(String content) {

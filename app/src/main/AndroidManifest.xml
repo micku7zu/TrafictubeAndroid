@@ -19,8 +19,8 @@
         </activity>
 
         <activity
-            android:name=".Activities.UserVideosActivity"
-            android:label="@string/user_videos_activity_label"
+            android:name=".Activities.UserPostsActivity"
+            android:label="@string/user_posts_activity_label"
             android:parentActivityName=".Activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

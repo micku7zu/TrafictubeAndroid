@@ -14,16 +14,16 @@ import com.micutu.trafictube.R;
 import com.micutu.trafictube.Views.AppCompatImageButtonWithTooltip;
 
 
-public class VideosListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+public class PostsListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
     private User user = null;
     private TextView title = null;
     private TextView more = null;
     private NetworkImageView image = null;
-    private ViewUserVideosListener viewUserVideosListener = null;
+    private ViewUserPostsListener viewUserPostsListener = null;
 
-    public VideosListViewHolder(final View itemView, ViewUserVideosListener viewUserVideosListener) {
+    public PostsListViewHolder(final View itemView, ViewUserPostsListener viewUserPostsListener) {
         super(itemView);
-        this.viewUserVideosListener = viewUserVideosListener;
+        this.viewUserPostsListener = viewUserPostsListener;
 
         this.title = (TextView) itemView.findViewById(R.id.title);
         this.more = (TextView) itemView.findViewById(R.id.more);
@@ -32,7 +32,7 @@ public class VideosListViewHolder extends RecyclerView.ViewHolder implements Vie
         ((AppCompatImageButtonWithTooltip) itemView.findViewById(R.id.thumbs_up)).setOnClickListener(this);
         ((AppCompatImageButtonWithTooltip) itemView.findViewById(R.id.play_button)).setOnClickListener(this);
 
-        if (this.viewUserVideosListener == null) {
+        if (this.viewUserPostsListener == null) {
             ((AppCompatImageButtonWithTooltip) itemView.findViewById(R.id.view_user)).setVisibility(View.GONE);
         } else {
             ((AppCompatImageButtonWithTooltip) itemView.findViewById(R.id.view_user)).setOnClickListener(this);
@@ -71,7 +71,7 @@ public class VideosListViewHolder extends RecyclerView.ViewHolder implements Vie
     }
 
     public void onViewUserPressed(View view) {
-        this.viewUserVideosListener.showUserVideos(this.user);
+        this.viewUserPostsListener.showUserPosts(this.user);
     }
 
     public void onThumbsUpPressed(View view) {
@@ -82,7 +82,7 @@ public class VideosListViewHolder extends RecyclerView.ViewHolder implements Vie
 
     }
 
-    public interface ViewUserVideosListener {
-        public void showUserVideos(User user);
+    public interface ViewUserPostsListener {
+        public void showUserPosts(User user);
     }
 }

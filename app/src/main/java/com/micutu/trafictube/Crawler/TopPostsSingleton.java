@@ -8,34 +8,34 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.micutu.trafictube.Data.Site;
 import com.micutu.trafictube.Data.User;
-import com.micutu.trafictube.Data.Video;
+import com.micutu.trafictube.Data.Post;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class TopVideosSingleton {
-    private final static String TAG = NormalVideos.class.getSimpleName();
+public class TopPostsSingleton {
+    private final static String TAG = NormalPosts.class.getSimpleName();
 
-    private static TopVideosSingleton instance = null;
+    private static TopPostsSingleton instance = null;
     private String content = null;
     private long lastUpdate = 0;
 
-    protected TopVideosSingleton() {
+    protected TopPostsSingleton() {
         content = null;
         lastUpdate = 0;
     }
 
-    public static TopVideosSingleton getInstance() {
-        if (TopVideosSingleton.instance == null) {
-            TopVideosSingleton.instance = new TopVideosSingleton();
+    public static TopPostsSingleton getInstance() {
+        if (TopPostsSingleton.instance == null) {
+            TopPostsSingleton.instance = new TopPostsSingleton();
         }
 
-        return TopVideosSingleton.instance;
+        return TopPostsSingleton.instance;
     }
 
-    public static void getVideoOfTheDay(Context context, final VideoListResponse listener) {
-        getInstance().getContent(context, new TopVideosSingleton.Response() {
+    public static void getPostOfTheDay(Context context, final PostListResponse listener) {
+        getInstance().getContent(context, new TopPostsSingleton.Response() {
             @Override
             public void onResponse(String content) {
                 try {
@@ -43,7 +43,7 @@ public class TopVideosSingleton {
                         throw new Exception("Can't get content from site.");
                     }
 
-                    listener.onResponse(getInstance().getVideoOfTheDayFromResponse(content), new HashMap<String, Object>());
+                    listener.onResponse(getInstance().getPostOfTheDayFromResponse(content), new HashMap<String, Object>());
                 } catch (final Exception e) {
                     listener.onResponse(null, (new HashMap<String, Object>() {{
                         put("error", Log.getStackTraceString(e));
@@ -53,14 +53,14 @@ public class TopVideosSingleton {
         });
     }
 
-    private Video getVideoOfTheDayFromResponse(String content) {
+    private Post getPostOfTheDayFromResponse(String content) {
         content = content.split("class=\"clipul-zilei\">")[1].split("<div class=\"site")[0];
 
-        return getVideoFromHtml(content);
+        return getPostFromHtml(content);
     }
 
-    public static void getGeneralTopVideos(Context context, final VideosListResponse listener) {
-        getInstance().getContent(context, new TopVideosSingleton.Response() {
+    public static void getGeneralTopPosts(Context context, final PostsListResponse listener) {
+        getInstance().getContent(context, new TopPostsSingleton.Response() {
             @Override
             public void onResponse(String content) {
                 try {
@@ -68,7 +68,7 @@ public class TopVideosSingleton {
                         throw new Exception("Can't get content from site.");
                     }
 
-                    listener.onResponse(getInstance().getGeneralTopVideosFromResponse(content), new HashMap<String, Object>());
+                    listener.onResponse(getInstance().getGeneralTopPostsFromResponse(content), new HashMap<String, Object>());
                 } catch (final Exception e) {
                     listener.onResponse(null, (new HashMap<String, Object>() {{
                         put("error", Log.getStackTraceString(e));
@@ -78,8 +78,8 @@ public class TopVideosSingleton {
         });
     }
 
-    public static void getWeeklyTopVideos(Context context, final VideosListResponse listener) {
-        getInstance().getContent(context, new TopVideosSingleton.Response() {
+    public static void getWeeklyTopPosts(Context context, final PostsListResponse listener) {
+        getInstance().getContent(context, new TopPostsSingleton.Response() {
             @Override
             public void onResponse(String content) {
                 try {
@@ -87,7 +87,7 @@ public class TopVideosSingleton {
                         throw new Exception("Can't get content from site.");
                     }
 
-                    listener.onResponse(getInstance().getWeeklyTopVideosFromResponse(content), new HashMap<String, Object>());
+                    listener.onResponse(getInstance().getWeeklyTopPostsFromResponse(content), new HashMap<String, Object>());
                 } catch (final Exception e) {
                     listener.onResponse(null, (new HashMap<String, Object>() {{
                         put("error", Log.getStackTraceString(e));
@@ -97,49 +97,49 @@ public class TopVideosSingleton {
         });
     }
 
-    private List<Video> getWeeklyTopVideosFromResponse(String content) {
+    private List<Post> getWeeklyTopPostsFromResponse(String content) {
         content = content.split("ULTIMA SAPTAMANA</h4>")[1].split("<h4>Top General")[0];
 
         String temps[] = content.split("the-video");
-        List<Video> videos = new ArrayList<Video>();
+        List<Post> posts = new ArrayList<Post>();
         for (int i = 1; i < temps.length; i++) {
-            videos.add(getVideoFromHtml(temps[i]));
+            posts.add(getPostFromHtml(temps[i]));
         }
-        return videos;
+        return posts;
     }
 
-    private List<Video> getGeneralTopVideosFromResponse(String content) {
+    private List<Post> getGeneralTopPostsFromResponse(String content) {
         content = content.split("General</h4>")[1].split("<h4>Top")[0];
 
         String temps[] = content.split("the-video");
-        List<Video> videos = new ArrayList<Video>();
+        List<Post> posts = new ArrayList<Post>();
         for (int i = 1; i < temps.length; i++) {
-            videos.add(getVideoFromHtml(temps[i]));
+            posts.add(getPostFromHtml(temps[i]));
         }
-        return videos;
+        return posts;
     }
 
-    private static Video getVideoFromHtml(String html) {
-        Video video = new Video();
+    private static Post getPostFromHtml(String html) {
+        Post post = new Post();
         User user = new User();
 
         /* ugly crawler */
         String[] titleArray = html.split("<h3")[1].split("</a>")[0].split("\">");
 
 
-        video.setTitle(titleArray[titleArray.length - 1]);
-        video.setLink(html.split("href=\"")[1].split("\"")[0]);
+        post.setTitle(titleArray[titleArray.length - 1]);
+        post.setLink(html.split("href=\"")[1].split("\"")[0]);
         user.setName(html.split("\"author\">")[1].split("</a>")[0].split("\">")[1]);
         user.setUsername(html.split("\"author\">")[1].split("/\" tit")[0].split("author/")[1]);
-        video.setUser(user);
-        video.setImage(html.split("background-image: url\\(")[1].split("\\);\">")[0].replaceAll("\\s+", ""));
-        video.setVotes(Integer.parseInt(html.split("class=\"voturi\">")[1].split(" voturi</span>")[0].split("</i>")[1]));
+        post.setUser(user);
+        post.setImage(html.split("background-image: url\\(")[1].split("\\);\">")[0].replaceAll("\\s+", ""));
+        post.setVotes(Integer.parseInt(html.split("class=\"voturi\">")[1].split(" voturi</span>")[0].split("</i>")[1]));
 
-        return video;
+        return post;
     }
 
-    private void getContent(Context context, final TopVideosSingleton.Response response) {
-        TopVideosSingleton instance = getInstance();
+    private void getContent(Context context, final TopPostsSingleton.Response response) {
+        TopPostsSingleton instance = getInstance();
 
         Log.d(TAG, "Difference in time: " + (getCurrentTime() - instance.lastUpdate));
 
@@ -159,14 +159,14 @@ public class TopVideosSingleton {
         StringRequest request = new StringRequest(Request.Method.GET, link, new com.android.volley.Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                TopVideosSingleton.getInstance().content = response;
+                TopPostsSingleton.getInstance().content = response;
                 instance.lastUpdate = getCurrentTime();
                 onResponse.onResponse(response);
             }
         }, new com.android.volley.Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                TopVideosSingleton.getInstance().content = null;
+                TopPostsSingleton.getInstance().content = null;
                 onResponse.onResponse(null);
             }
         });
@@ -175,12 +175,12 @@ public class TopVideosSingleton {
         VolleySingleton.makeRequest(context, request);
     }
 
-    public static void getTwoDaysTopVideos(Context context, final VideosListResponse onResponse) {
+    public static void getTwoDaysTopPosts(Context context, final PostsListResponse onResponse) {
         StringRequest request = new StringRequest(Request.Method.GET, Site.link, new com.android.volley.Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
-                    onResponse.onResponse(getTwoDaysTopVideosFromResponse(response), new HashMap<String, Object>());
+                    onResponse.onResponse(getTwoDaysTopPostsFromResponse(response), new HashMap<String, Object>());
                 } catch (final Exception e) {
                     onResponse.onResponse(null, (new HashMap<String, Object>() {{
                         put("error", Log.getStackTraceString(e));
@@ -199,15 +199,15 @@ public class TopVideosSingleton {
         VolleySingleton.makeRequest(context, request);
     }
 
-    private static List<Video> getTwoDaysTopVideosFromResponse(String content) {
+    private static List<Post> getTwoDaysTopPostsFromResponse(String content) {
         content = content.split("class=\"top-clips\">")[1].split("class=\"latest-clips\"")[0];
 
         String temps[] = content.split("the-video");
-        List<Video> videos = new ArrayList<Video>();
+        List<Post> posts = new ArrayList<Post>();
         for (int i = 1; i < temps.length; i++) {
-            videos.add(getVideoFromHtml(temps[i]));
+            posts.add(getPostFromHtml(temps[i]));
         }
-        return videos;
+        return posts;
     }
 
     private long getCurrentTime() {
