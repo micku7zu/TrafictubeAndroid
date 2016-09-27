@@ -2,11 +2,8 @@ package com.micutu.trafictube.Activities;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 
 import com.micutu.trafictube.Fragments.PostsListFragment;

@@ -7,6 +7,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.micutu.trafictube.Crawler.Responses.PostsListResponse;
 import com.micutu.trafictube.Data.Site;
 import com.micutu.trafictube.Data.User;
 import com.micutu.trafictube.Data.Post;

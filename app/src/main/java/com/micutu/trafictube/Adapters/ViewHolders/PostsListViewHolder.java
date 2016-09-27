@@ -1,8 +1,6 @@
 package com.micutu.trafictube.Adapters.ViewHolders;
 
 import android.content.Context;
-import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;

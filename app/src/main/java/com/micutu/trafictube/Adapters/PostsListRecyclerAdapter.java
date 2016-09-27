@@ -4,16 +4,13 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.micutu.trafictube.Adapters.ViewHolders.LoadingListViewHolder;
 import com.micutu.trafictube.Adapters.ViewHolders.PostsListViewHolder;
 import com.micutu.trafictube.Data.Post;
-import com.micutu.trafictube.Fragments.PostsListFragment;
 import com.micutu.trafictube.R;
 
 import java.util.List;

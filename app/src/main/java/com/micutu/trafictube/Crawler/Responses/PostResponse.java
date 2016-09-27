@@ -1,9 +1,9 @@
-package com.micutu.trafictube.Crawler;
+package com.micutu.trafictube.Crawler.Responses;
 
 import com.micutu.trafictube.Data.Post;
 
 import java.util.Map;
 
-interface PostResponse {
+public interface PostResponse {
     void onResponse(Post post, Map<String, Object> extra);
 }

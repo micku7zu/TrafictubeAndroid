@@ -3,15 +3,18 @@ package com.micutu.trafictube.Data;
 import java.util.List;
 
 public class Post {
+    private Integer id = null;
     private String title = null;
     private User user = null;
     private Integer votes = null;
     private String link = null;
     private String image = null;
     private String timeAgo = null;
+    private String htmlContent = null;
     private List<Comment> comments = null;
     private Integer commentsCount = null;
     private List<String> tags = null;
+    private Video video = null;
 
     public String getTitle() {
         return title;
@@ -50,7 +53,9 @@ public class Post {
     }
 
     public void setImage(String image) {
-        this.image = image;
+        if (image.length() > 0) {
+            this.image = image;
+        }
     }
 
     public String getTimeAgo() {
@@ -88,5 +93,29 @@ public class Post {
     @Override
     public String toString() {
         return this.getTitle() + " - " + this.getUser().getUsername();
+    }
+
+    public Video getVideo() {
+        return video;
+    }
+
+    public void setVideo(Video video) {
+        this.video = video;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getHtmlContent() {
+        return htmlContent;
+    }
+
+    public void setHtmlContent(String htmlContent) {
+        this.htmlContent = htmlContent;
     }
 }

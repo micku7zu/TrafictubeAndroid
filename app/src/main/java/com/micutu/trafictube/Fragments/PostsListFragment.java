@@ -17,7 +17,7 @@ import com.micutu.trafictube.Adapters.PostsListRecyclerAdapter;
 import com.micutu.trafictube.Adapters.ViewHolders.PostsListViewHolder.ViewUserPostsListener;
 import com.micutu.trafictube.Crawler.NormalPosts;
 import com.micutu.trafictube.Crawler.TopPostsSingleton;
-import com.micutu.trafictube.Crawler.PostsListResponse;
+import com.micutu.trafictube.Crawler.Responses.PostsListResponse;
 import com.micutu.trafictube.Data.Post;
 import com.micutu.trafictube.R;
 import com.micutu.trafictube.Views.HidingScrollListener;
