@@ -55,6 +55,11 @@ public class PlayVideoDialog extends Dialog implements DialogInterface.OnDismiss
         GetPostSingleton.getPostVideo(this.activity, post.getLink(), new VideoResponse() {
             @Override
             public void onResponse(Video video, Map<String, Object> extra) {
+                if (video == null) {
+                    PlayVideoDialog.this.showError();
+                    return;
+                }
+
                 if (video.getType() != Video.TYPE_YOUTUBE) {
                     PlayVideoDialog.this.showError();
                     return;
@@ -89,7 +94,8 @@ public class PlayVideoDialog extends Dialog implements DialogInterface.OnDismiss
     }
 
     public void showError() {
-        Toast.makeText(activity, "Here will be error.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(activity, "Eroare netratata. Ori nu ai net, ori nu e youtube.", Toast.LENGTH_SHORT).show();
+        this.dismiss();
     }
 
     @Override
