@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.graphics.Point;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -135,6 +136,7 @@ public class PostsListViewHolder extends RecyclerView.ViewHolder implements View
                         GetPostSingleton.getPostVideo(context, post.getLink(), new VideoResponse() {
                             @Override
                             public void onResponse(Video video, Map<String, Object> extra) {
+                                Log.d("TEST", video.getId());
                                 youTubePlayer.loadVideo(video.getId());
                             }
                         });

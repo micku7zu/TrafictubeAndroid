@@ -32,10 +32,9 @@ public class GetPostSingleton {
                 try {
                     videoResponse.onResponse(getVideoFromPostPage(response), new HashMap<String, Object>());
                 } catch (final Exception e) {
-                    System.out.println(response);
-                    //videoResponse.onResponse(null, (new HashMap<String, Object>() {{
-                    //    put("error", Log.getStackTraceString(e));
-                    //}}));
+                    videoResponse.onResponse(null, (new HashMap<String, Object>() {{
+                        put("error", Log.getStackTraceString(e));
+                    }}));
                 }
             }
         }, new com.android.volley.Response.ErrorListener() {
@@ -82,23 +81,38 @@ public class GetPostSingleton {
     }
 
     private static Video getVideoFromPostPage(String content) {
-        if (!content.contains("class=\"youtube-player\"")) {
-            return null;
+        Video video = null;
+
+        if (content.contains("class=\"youtube-player\"")) {
+            video = new Video();
+            content = content.split("class=\"youtube-player\"")[1].split("\">")[0];
+            video.setId(content.split("data-id=\"")[1].split("\"")[0]);
+            video.setType(content.split("data-vt=\"")[1].split("\"")[0]);
+            video.setImageUrl(content.split("data-src=\"")[1].split("\"")[0]);
+        } else if (content.contains("video-player\"><iframe")) {
+            video = new Video();
+            video.setImageUrl(content.split("</head>")[0].split("og:image\" content=\"")[1].split("\" />")[0]);
+            content = content.split("video-player\"><iframe")[1].split("src=\"")[1].split("\" ")[0];
+            int type = Video.TYPE_YOUTUBE;
+            if (content.contains("vimeo.com/video/")) {
+                type = Video.TYPE_VIMEO;
+            }
+            video.setType(type);
+            String temp[] = content.split("\\?")[0].split("/");
+            video.setId(temp[temp.length - 1]);
         }
-
-        content = content.split("class=\"youtube-player\"")[1].split("\">")[0];
-
-        Video video = new Video();
-
-        video.setId(content.split("data-id=\"")[1].split("\"")[0]);
-        video.setType(content.split("data-vt=\"")[1].split("\"")[0]);
-        video.setImageUrl(content.split("data-src=\"")[1].split("\"")[0]);
 
         return video;
     }
 
     private static Post parsePostPage(String content) {
-        if (!content.contains("the-main-postPost")) {
+        if (!content.contains("the-main-video")) {
+            return null;
+        }
+
+        Video video = getVideoFromPostPage(content);
+
+        if (video == null) {
             return null;
         }
 
@@ -134,6 +148,7 @@ public class GetPostSingleton {
         }
         post.setTags(tagsList);
         post.setHtmlContent(content.split("the-content\" itemprop=\"text\">")[1].split("</div>")[0]);
+        post.setVideo(video);
 
 
         return post;

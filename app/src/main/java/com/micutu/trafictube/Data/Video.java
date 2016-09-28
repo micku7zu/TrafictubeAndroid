@@ -1,9 +1,9 @@
 package com.micutu.trafictube.Data;
 
 public class Video {
-    public final int TYPE_YOUTUBE = 0;
-    public final int TYPE_VIMEO = 1;
-    public final int TYPE_OTHER = 2;
+    public static int TYPE_YOUTUBE = 0;
+    public static int TYPE_VIMEO = 1;
+    public static int TYPE_OTHER = 2;
 
     private Integer type = null;
     private String id = null;
