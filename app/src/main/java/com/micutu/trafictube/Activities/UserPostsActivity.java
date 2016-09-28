@@ -2,14 +2,15 @@ package com.micutu.trafictube.Activities;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.micutu.trafictube.Adapters.ViewHolders.PostsListViewHolder.PostsActionsListener;
+import com.micutu.trafictube.Data.User;
 import com.micutu.trafictube.Fragments.PostsListFragment;
 import com.micutu.trafictube.R;
 
-public class UserPostsActivity extends AppCompatActivity {
+public class UserPostsActivity extends AppCompatPlayVideoActivity implements PostsActionsListener {
     public static final String USERNAME = "username";
     public static final String USER_NAME = "name";
 
@@ -48,5 +49,15 @@ public class UserPostsActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean showUsersPostsButton() {
+        return false;
+    }
+
+    @Override
+    public void showUserPosts(User user) {
+        return;
     }
 }

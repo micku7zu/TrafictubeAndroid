@@ -14,7 +14,8 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
 import com.micutu.trafictube.Adapters.PostsListRecyclerAdapter;
-import com.micutu.trafictube.Adapters.ViewHolders.PostsListViewHolder.ViewUserPostsListener;
+import com.micutu.trafictube.Adapters.ViewHolders.PostsListViewHolder;
+import com.micutu.trafictube.Adapters.ViewHolders.PostsListViewHolder.PostsActionsListener;
 import com.micutu.trafictube.Crawler.NormalPosts;
 import com.micutu.trafictube.Crawler.TopPostsSingleton;
 import com.micutu.trafictube.Crawler.Responses.PostsListResponse;
@@ -135,9 +136,9 @@ public class PostsListFragment extends Fragment implements PostsListResponse {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
-        ViewUserPostsListener onViewUserPostsListener = null;
-        if(getActivity() instanceof ViewUserPostsListener) {
-            onViewUserPostsListener = (ViewUserPostsListener) getActivity();
+        PostsActionsListener onViewUserPostsListener = null;
+        if(getActivity() instanceof PostsActionsListener) {
+            onViewUserPostsListener = (PostsActionsListener) getActivity();
         }
 
         final PostsListRecyclerAdapter adapter = new PostsListRecyclerAdapter(onViewUserPostsListener, context, posts);

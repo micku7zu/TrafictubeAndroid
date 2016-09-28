@@ -9,7 +9,6 @@ import android.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -17,13 +16,13 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 
-import com.micutu.trafictube.Adapters.ViewHolders.PostsListViewHolder;
+import com.micutu.trafictube.Adapters.ViewHolders.PostsListViewHolder.PostsActionsListener;
 import com.micutu.trafictube.Data.User;
 import com.micutu.trafictube.Fragments.AboutFragment;
 import com.micutu.trafictube.Fragments.PostsListFragment;
 import com.micutu.trafictube.R;
 
-public class MainActivity extends AppCompatActivity implements PostsListViewHolder.ViewUserPostsListener, PostsListFragment.OnSearchDialogShow, NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatPlayVideoActivity implements PostsActionsListener, PostsListFragment.OnSearchDialogShow, NavigationView.OnNavigationItemSelectedListener {
     private final static String TAG = MainActivity.class.getSimpleName();
 
     public static String YOUTUBE_DEVELOPER_KEY = "AIzaSyBfF9G0xNvqZSg_h81X67jGqt5rAxFNWqs";
@@ -122,6 +121,11 @@ public class MainActivity extends AppCompatActivity implements PostsListViewHold
         AlertDialog dialog = builder.create();
         dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         dialog.show();
+    }
+
+    @Override
+    public boolean showUsersPostsButton() {
+        return true;
     }
 
     @Override
