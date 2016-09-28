@@ -20,7 +20,6 @@ import com.micutu.trafictube.Crawler.Responses.VideoResponse;
 import com.micutu.trafictube.Data.Post;
 import com.micutu.trafictube.Data.Video;
 import com.micutu.trafictube.R;
-import com.micutu.trafictube.Utils.DimenUtils;
 
 import java.util.Map;
 
@@ -74,7 +73,6 @@ public class PlayVideoDialog extends Dialog implements DialogInterface.OnDismiss
 
     @Override
     public void onFullscreen(boolean fullscreen) {
-        Log.d("FULLSCREEN TOGGLED:", fullscreen + "");
         this.fullscreen = fullscreen;
     }
 
@@ -118,14 +116,4 @@ public class PlayVideoDialog extends Dialog implements DialogInterface.OnDismiss
     @Override
     public void onShow(DialogInterface dialogInterface) {
     }
-
-    /* temporary not needed
-    public void setViewFullscreen(View view) {
-        ViewGroup.LayoutParams params = view.getLayoutParams();
-        Point size = DimenUtils.getAppUsableScreenSize(this.activity);
-        params.height = size.y - DimenUtils.getStatusBarHeight(this.activity);
-        params.width = size.x;
-        view.setLayoutParams(params);
-    }
-    */
 }
