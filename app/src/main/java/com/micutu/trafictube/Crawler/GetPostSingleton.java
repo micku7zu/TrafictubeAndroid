@@ -29,13 +29,7 @@ public class GetPostSingleton {
         StringRequest request = new StringRequest(Request.Method.GET, postLink, new com.android.volley.Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                try {
-                    videoResponse.onResponse(getVideoFromPostPage(response), new HashMap<String, Object>());
-                } catch (final Exception e) {
-                    videoResponse.onResponse(null, (new HashMap<String, Object>() {{
-                        put("error", Log.getStackTraceString(e));
-                    }}));
-                }
+                videoResponse.onResponse(getVideoFromPostPage(response), new HashMap<String, Object>());
             }
         }, new com.android.volley.Response.ErrorListener() {
             @Override

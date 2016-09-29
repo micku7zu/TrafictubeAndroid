@@ -4,21 +4,26 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.micutu.trafictube.Adapters.ViewHolders.PostsListViewHolder.PostsActionsListener;
 import com.micutu.trafictube.Data.Post;
-import com.micutu.trafictube.Views.PlayVideoDialog;
+import com.micutu.trafictube.Fragments.PlayVideoFragmentDialog;
 
 public abstract class AppCompatPlayVideoActivity extends AppCompatActivity implements PostsActionsListener {
-    private PlayVideoDialog playVideoDialog = null;
+    private PlayVideoFragmentDialog playVideoFragmentDialog = null;
+
+    public AppCompatPlayVideoActivity() {
+        this.playVideoFragmentDialog = null;
+    }
 
     @Override
     public void showVideoDialog(Post post) {
-        this.playVideoDialog = new PlayVideoDialog(this);
-        playVideoDialog.playPost(post);
+        this.playVideoFragmentDialog = new PlayVideoFragmentDialog();
+        this.playVideoFragmentDialog.show(getSupportFragmentManager(), null);
+        this.playVideoFragmentDialog.play(post);
     }
 
     @Override
     public void onBackPressed() {
-        if (playVideoDialog != null && playVideoDialog.isFullscreen() == true) {
-            playVideoDialog.setFullscreen(false);
+        if (this.playVideoFragmentDialog != null && this.playVideoFragmentDialog.isFullscreen() == true) {
+            this.playVideoFragmentDialog.setFullscreen(false);
         } else {
             super.onBackPressed();
         }
