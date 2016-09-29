@@ -9,13 +9,13 @@ public class YoutubePlayerFragment extends YouTubePlayerSupportFragment implemen
 
     private InitializationListener initializationListener = null;
     private YouTubePlayer youTubePlayer = null;
-    private Boolean fullscreen = null;
+    private Boolean fullscreen = false;
 
     @Override
     public void initialization(InitializationListener initializationListener) {
         this.initializationListener = initializationListener;
         this.youTubePlayer = null;
-        this.fullscreen = null;
+        this.fullscreen = false;
         this.initialize(MainActivity.YOUTUBE_DEVELOPER_KEY, this);
     }
 
