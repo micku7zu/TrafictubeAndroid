@@ -1,20 +1,14 @@
-package com.micutu.trafictube.Views;
+package com.micutu.trafictube.Views.Player;
 
-import android.animation.TimeInterpolator;
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Resources;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.accessibility.AccessibilityManager;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.MediaController;
