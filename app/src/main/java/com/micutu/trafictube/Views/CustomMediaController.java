@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,16 +30,12 @@ public class CustomMediaController extends FrameLayout {
 
     /* copy paste */
     private MediaController.MediaPlayerControl mPlayer;
-    private View mAnchor;
     private View mRoot;
-    private View mDecor;
-    private WindowManager.LayoutParams mDecorLayoutParams;
     private ProgressBar mProgress;
     private TextView mEndTime, mCurrentTime;
     private boolean mShowing;
     private boolean mDragging;
     private static final int sDefaultTimeout = 3000;
-    private boolean mFromXml;
     private boolean mListenersSet;
     private View.OnClickListener mNextListener, mPrevListener;
     StringBuilder mFormatBuilder;
@@ -65,6 +62,8 @@ public class CustomMediaController extends FrameLayout {
     }
 
     public void initialization() {
+        mRoot = this;
+
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         FrameLayout.LayoutParams frameParams = new FrameLayout.LayoutParams(
@@ -89,24 +88,22 @@ public class CustomMediaController extends FrameLayout {
         mFfwdButton = (ImageButton) v.findViewById(R.id.ffwd);
         if (mFfwdButton != null) {
             mFfwdButton.setOnClickListener(mFfwdListener);
-            if (!mFromXml) {
-                mFfwdButton.setVisibility(View.VISIBLE);
-            }
+            mFfwdButton.setVisibility(View.VISIBLE);
+
         }
         mRewButton = (ImageButton) v.findViewById(R.id.rew);
         if (mRewButton != null) {
             mRewButton.setOnClickListener(mRewListener);
-            if (!mFromXml) {
-                mRewButton.setVisibility(View.VISIBLE);
-            }
+            mRewButton.setVisibility(View.VISIBLE);
+
         }
         // By default these are hidden. They will be enabled when setPrevNextListeners() is called
         mNextButton = (ImageButton) v.findViewById(R.id.next);
-        if (mNextButton != null && !mFromXml && !mListenersSet) {
+        if (mNextButton != null && !mListenersSet) {
             mNextButton.setVisibility(View.GONE);
         }
         mPrevButton = (ImageButton) v.findViewById(R.id.prev);
-        if (mPrevButton != null && !mFromXml && !mListenersSet) {
+        if (mPrevButton != null && !mListenersSet) {
             mPrevButton.setVisibility(View.GONE);
         }
         mProgress = (SeekBar) v.findViewById(R.id.mediacontroller_progress);
@@ -141,10 +138,10 @@ public class CustomMediaController extends FrameLayout {
         mListenersSet = true;
         if (mRoot != null) {
             installPrevNextListeners();
-            if (mNextButton != null && !mFromXml) {
+            if (mNextButton != null) {
                 mNextButton.setVisibility(View.VISIBLE);
             }
-            if (mPrevButton != null && !mFromXml) {
+            if (mPrevButton != null) {
                 mPrevButton.setVisibility(View.VISIBLE);
             }
         }
@@ -170,6 +167,7 @@ public class CustomMediaController extends FrameLayout {
     private void updatePausePlay() {
         if (mRoot == null || mPauseButton == null)
             return;
+
         if (mPlayer.isPlaying()) {
             mPauseButton.setImageResource(android.R.drawable.ic_media_pause);
             mPauseButton.setContentDescription(mPauseDescription);
@@ -290,7 +288,7 @@ public class CustomMediaController extends FrameLayout {
     }
 
     public void show(int timeout) {
-        if (!mShowing && mAnchor != null) {
+        if (!mShowing) {
             setProgress();
             if (mPauseButton != null) {
                 mPauseButton.requestFocus();
@@ -298,6 +296,7 @@ public class CustomMediaController extends FrameLayout {
             disableUnsupportedButtons();
             mShowing = true;
             //show
+            mRoot.setVisibility(View.VISIBLE);
         }
         updatePausePlay();
         // cause the progress bar to be updated even if mShowing
@@ -310,6 +309,53 @@ public class CustomMediaController extends FrameLayout {
         }
     }
 
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        int keyCode = event.getKeyCode();
+        final boolean uniqueDown = event.getRepeatCount() == 0
+                && event.getAction() == KeyEvent.ACTION_DOWN;
+        if (keyCode == KeyEvent.KEYCODE_HEADSETHOOK
+                || keyCode == KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE
+                || keyCode == KeyEvent.KEYCODE_SPACE) {
+            if (uniqueDown) {
+                doPauseResume();
+                show(sDefaultTimeout);
+                if (mPauseButton != null) {
+                    mPauseButton.requestFocus();
+                }
+            }
+            return true;
+        } else if (keyCode == KeyEvent.KEYCODE_MEDIA_PLAY) {
+            if (uniqueDown && !mPlayer.isPlaying()) {
+                mPlayer.start();
+                updatePausePlay();
+                show(sDefaultTimeout);
+            }
+            return true;
+        } else if (keyCode == KeyEvent.KEYCODE_MEDIA_STOP
+                || keyCode == KeyEvent.KEYCODE_MEDIA_PAUSE) {
+            if (uniqueDown && mPlayer.isPlaying()) {
+                mPlayer.pause();
+                updatePausePlay();
+                show(sDefaultTimeout);
+            }
+            return true;
+        } else if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN
+                || keyCode == KeyEvent.KEYCODE_VOLUME_UP
+                || keyCode == KeyEvent.KEYCODE_VOLUME_MUTE
+                || keyCode == KeyEvent.KEYCODE_CAMERA) {
+            // don't show the controls for volume adjustment
+            return super.dispatchKeyEvent(event);
+        } else if (keyCode == KeyEvent.KEYCODE_BACK || keyCode == KeyEvent.KEYCODE_MENU) {
+            if (uniqueDown) {
+                hide();
+            }
+            return true;
+        }
+        show(sDefaultTimeout);
+        return super.dispatchKeyEvent(event);
+    }
+
     private final Runnable mFadeOut = new Runnable() {
         @Override
         public void run() {
@@ -318,12 +364,12 @@ public class CustomMediaController extends FrameLayout {
     };
 
     public void hide() {
-        if (mAnchor == null)
-            return;
+
         if (mShowing) {
             try {
                 removeCallbacks(mShowProgress);
                 //hide
+                mRoot.setVisibility(View.GONE);
             } catch (IllegalArgumentException ex) {
                 Log.w("MediaController", "already removed");
             }

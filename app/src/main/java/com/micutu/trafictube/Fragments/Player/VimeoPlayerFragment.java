@@ -1,8 +1,9 @@
 package com.micutu.trafictube.Fragments.Player;
 
 import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnInfoListener;
+import android.media.MediaPlayer.OnPreparedListener;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,9 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
-import android.widget.MediaController;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.micutu.trafictube.R;
@@ -28,7 +27,6 @@ public class VimeoPlayerFragment extends Fragment implements PlayerFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Toast.makeText(getActivity(), "Vimeo not supported yet.", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -45,9 +43,25 @@ public class VimeoPlayerFragment extends Fragment implements PlayerFragment {
         final CustomMediaController customMediaController = (CustomMediaController) root.findViewById(R.id.custom_media_controller_vimeo);
         customMediaController.setMediaPlayer(videoView);
         customMediaController.setEnabled(true);
+        
+        videoView.setOnPreparedListener(new OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mediaPlayer) {
+                mediaPlayer.setOnInfoListener(new OnInfoListener() {
+                    @Override
+                    public boolean onInfo(MediaPlayer mediaPlayer, int i, int i1) {
+                        if (i == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
+                            videoView.setBackgroundResource(android.R.color.transparent);
+                            customMediaController.show(0);
+                        }
+                        return false;
+                    }
+                });
+            }
+        });
+
         videoView.start();
         customMediaController.initialization();
-
     }
 
     @JavascriptInterface
@@ -69,4 +83,5 @@ public class VimeoPlayerFragment extends Fragment implements PlayerFragment {
     public Boolean isFullscreen() {
         return null;
     }
+
 }

@@ -2,13 +2,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/relative_layout_vimeo"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@android:color/black">
 
     <VideoView
         android:id="@+id/video_view_vimeo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true" />
+        android:layout_centerVertical="true"
+        android:background="@android:color/black"/>
 
     <com.micutu.trafictube.Views.CustomMediaController
         android:layout_width="match_parent"
