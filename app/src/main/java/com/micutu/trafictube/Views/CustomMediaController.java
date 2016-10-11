@@ -1,5 +1,6 @@
 package com.micutu.trafictube.Views;
 
+import android.animation.TimeInterpolator;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Resources;
@@ -12,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.accessibility.AccessibilityManager;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.MediaController;
@@ -309,6 +312,20 @@ public class CustomMediaController extends FrameLayout {
         }
     }
 
+    public void hide() {
+
+        if (mShowing) {
+            try {
+                removeCallbacks(mShowProgress);
+                //hide
+                mRoot.setVisibility(View.GONE);
+            } catch (IllegalArgumentException ex) {
+                Log.w("MediaController", "already removed");
+            }
+            mShowing = false;
+        }
+    }
+
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
         int keyCode = event.getKeyCode();
@@ -362,20 +379,6 @@ public class CustomMediaController extends FrameLayout {
             hide();
         }
     };
-
-    public void hide() {
-
-        if (mShowing) {
-            try {
-                removeCallbacks(mShowProgress);
-                //hide
-                mRoot.setVisibility(View.GONE);
-            } catch (IllegalArgumentException ex) {
-                Log.w("MediaController", "already removed");
-            }
-            mShowing = false;
-        }
-    }
 
 
     private void disableUnsupportedButtons() {

@@ -7,7 +7,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
@@ -39,11 +41,11 @@ public class VimeoPlayerFragment extends Fragment implements PlayerFragment {
 
     @Override
     public void initialization(InitializationListener initializationListener) {
-        videoView.setVideoURI(Uri.parse("https://06-lvl3-pdl.vimeocdn.com/01/651/1/28259893/63220624.mp4?expires=1476206727&token=028630613b6e3c086ca09"));
+        videoView.setVideoURI(Uri.parse("https://06-lvl3-pdl.vimeocdn.com/01/651/1/28259893/63220624.mp4?expires=1476210650&token=0241fee6366be489c26e7"));
         final CustomMediaController customMediaController = (CustomMediaController) root.findViewById(R.id.custom_media_controller_vimeo);
         customMediaController.setMediaPlayer(videoView);
         customMediaController.setEnabled(true);
-        
+
         videoView.setOnPreparedListener(new OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mediaPlayer) {
@@ -52,11 +54,24 @@ public class VimeoPlayerFragment extends Fragment implements PlayerFragment {
                     public boolean onInfo(MediaPlayer mediaPlayer, int i, int i1) {
                         if (i == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
                             videoView.setBackgroundResource(android.R.color.transparent);
-                            customMediaController.show(0);
+                            customMediaController.show();
                         }
                         return false;
                     }
                 });
+            }
+        });
+
+
+        videoView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (customMediaController.isShown()) {
+                    customMediaController.hide();
+                } else {
+                    customMediaController.show();
+                }
+                return false;
             }
         });
 
