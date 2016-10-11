@@ -11,10 +11,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.micutu.trafictube.Adapters.ViewHolders.PostsListViewHolder.PostsActionsListener;
 import com.micutu.trafictube.Data.User;
@@ -107,20 +109,29 @@ public class MainActivity extends AppCompatPlayVideoActivity implements PostsAct
     public void showSearchDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         @SuppressLint("InflateParams") final View searchDialog = this.getLayoutInflater().inflate(R.layout.search_dialog_content, null);
+
+        final EditText searchEditText = (EditText) searchDialog.findViewById(R.id.search_edit_text);
         builder.setTitle(R.string.search_dialog_title)
                 .setView(searchDialog)
                 .setPositiveButton(getResources().getString(R.string.search_dialog_title), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        EditText searchEditText = (EditText) searchDialog.findViewById(R.id.search_edit_text);
                         switchFragment(R.id.search, searchEditText.getText().toString());
                     }
                 })
                 .setNegativeButton(getResources().getString(R.string.cancel), null);
-
-        AlertDialog dialog = builder.create();
+        final AlertDialog dialog = builder.create();
         dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         dialog.show();
+
+        searchEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                switchFragment(R.id.search, searchEditText.getText().toString());
+                dialog.dismiss();
+                return false;
+            }
+        });
     }
 
     @Override

@@ -82,7 +82,11 @@ public class GetPostSingleton {
             content = content.split("class=\"youtube-player\"")[1].split("\">")[0];
             video.setId(content.split("data-id=\"")[1].split("\"")[0]);
             video.setType(content.split("data-vt=\"")[1].split("\"")[0]);
-            video.setImageUrl(content.split("data-src=\"")[1].split("\"")[0]);
+            try {
+                video.setImageUrl(content.split("data-src=\"")[1].split("\"")[0]);
+            } catch (Exception e) {
+            }
+
         } else if (content.contains("video-player\"><iframe")) {
             video = new Video();
             video.setImageUrl(content.split("</head>")[0].split("og:image\" content=\"")[1].split("\" />")[0]);

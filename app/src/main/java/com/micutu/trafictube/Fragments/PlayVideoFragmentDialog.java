@@ -1,16 +1,12 @@
 package com.micutu.trafictube.Fragments;
 
-import android.app.Dialog;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.DecelerateInterpolator;
-import android.widget.Toast;
+import android.view.WindowManager;
 
 import com.micutu.trafictube.Crawler.GetPostSingleton;
 import com.micutu.trafictube.Crawler.Responses.VideoResponse;
@@ -23,12 +19,14 @@ import com.micutu.trafictube.R;
 
 import java.util.Map;
 
-public class PlayVideoFragmentDialog extends DialogFragment implements PlayerFragment.InitializationListener {
+public class PlayVideoFragmentDialog extends DialogFragment implements PlayerFragment.InitializationListener, View.OnClickListener {
 
     private PlayerFragment playerFragment = null;
     private Video video = null;
+    private Post post = null;
 
     public PlayVideoFragmentDialog() {
+        this.post = null;
         this.video = null;
         this.playerFragment = null;
     }
@@ -39,6 +37,7 @@ public class PlayVideoFragmentDialog extends DialogFragment implements PlayerFra
     }
 
     public void play(Post post) {
+        this.post = post;
         GetPostSingleton.getPostVideo(getActivity(), post.getLink(), new VideoResponse() {
             @Override
             public void onResponse(Video video, Map<String, Object> extra) {
@@ -56,6 +55,8 @@ public class PlayVideoFragmentDialog extends DialogFragment implements PlayerFra
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.play_video_fragment_dialog, container);
+
+        view.findViewById(R.id.retry_button).setOnClickListener(this);
         return view;
     }
 
@@ -63,13 +64,22 @@ public class PlayVideoFragmentDialog extends DialogFragment implements PlayerFra
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_Material_NoActionBar_Fullscreen);
+
+        WindowManager.LayoutParams a = getActivity().getWindow().getAttributes();
+        a.dimAmount = 0;
+        getActivity().getWindow().setAttributes(a);
     }
 
     public void hideProgressBar() {
         this.getView().findViewById(R.id.play_video_fragment_dialog_progress_bar).setVisibility(View.GONE);
     }
 
+    public void showProgressBar() {
+        this.getView().findViewById(R.id.play_video_fragment_dialog_progress_bar).setVisibility(View.VISIBLE);
+    }
+
     public void createFragmentAndInit(Video video) {
+        System.out.println(video.getId());
         this.hideProgressBar();
         this.playerFragment = null;
 
@@ -80,6 +90,7 @@ public class PlayVideoFragmentDialog extends DialogFragment implements PlayerFra
         }
 
         this.getChildFragmentManager().beginTransaction().replace(R.id.player_fragment, (Fragment) playerFragment).commit();
+        this.getChildFragmentManager().executePendingTransactions();
         this.playerFragment.initialization(this);
     }
 
@@ -99,7 +110,13 @@ public class PlayVideoFragmentDialog extends DialogFragment implements PlayerFra
             return false;
         }
 
-        return this.playerFragment.isFullscreen();
+        Boolean isFullscreen = this.playerFragment.isFullscreen();
+
+        if (isFullscreen == null) {
+            return false;
+        }
+
+        return isFullscreen;
     }
 
     public void setFullscreen(Boolean fullscreen) {
@@ -111,7 +128,23 @@ public class PlayVideoFragmentDialog extends DialogFragment implements PlayerFra
     }
 
     public void showError() {
-        Toast.makeText(getActivity(), "Eroare netratata. Ori nu ai net, ori nu e youtube.", Toast.LENGTH_SHORT).show();
-        this.dismiss();
+        this.hideProgressBar();
+        this.getView().findViewById(R.id.error_container).setVisibility(View.VISIBLE);
+    }
+
+    public void hideError() {
+        this.getView().findViewById(R.id.error_container).setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onClick(View view) {
+        this.hideError();
+        this.showProgressBar();
+
+        if (this.post == null) {
+            this.play(this.video);
+        } else {
+            this.play(this.post);
+        }
     }
 }
