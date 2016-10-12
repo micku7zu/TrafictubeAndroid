@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.micutu.trafictube.Crawler.VimeoCrawler;
 import com.micutu.trafictube.Views.Player.CustomVideoPlayer;
@@ -34,19 +35,23 @@ public class VimeoPlayerFragment extends Fragment implements PlayerFragment {
 
     @Override
     public void playVideo(String id) {
-        VimeoCrawler.getVimeoVideoDirectUrl(getContext(), "https://player.vimeo.com/video/" + id + "?autoplay=1&byline=0&portrait=0&color=FFD602",
-                new VimeoCrawler.VimeoResponse() {
+        VimeoCrawler.getVimeoVideoDirectUrlSavedeo(getContext(), id, new VimeoCrawler.VimeoResponse() {
+            @Override
+            public void onResponse(final String vimeoDirectUrl) {
+                Log.d("TEST", "URL: " + vimeoDirectUrl);
+                if (vimeoDirectUrl.length() < 5) {
+                    Toast.makeText(getContext(), "Eroare :(", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                getActivity().runOnUiThread(new Runnable() {
                     @Override
-                    public void onResponse(final String vimeoDirectUrl) {
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Log.d("TEST", vimeoDirectUrl);
-                                VimeoPlayerFragment.this.customVideoPlayer.playVideoUrl(vimeoDirectUrl);
-                            }
-                        });
+                    public void run() {
+                        VimeoPlayerFragment.this.customVideoPlayer.playVideoUrl(vimeoDirectUrl);
                     }
                 });
+            }
+        });
     }
 
     @Override
