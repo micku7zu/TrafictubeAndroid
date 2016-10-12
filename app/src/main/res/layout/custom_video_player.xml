@@ -7,7 +7,8 @@
         android:id="@+id/video_player_video_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"/>
+        android:layout_centerVertical="true"
+        android:background="@android:color/black"/>
 
     <com.micutu.trafictube.Views.Player.CustomMediaController
         android:layout_width="match_parent"

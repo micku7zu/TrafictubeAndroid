@@ -28,7 +28,7 @@ public class VimeoPlayerFragment extends Fragment implements PlayerFragment {
 
     @Override
     public void initialization(InitializationListener initializationListener) {
-        this.customVideoPlayer.playVideoUrl("https://06-lvl3-pdl.vimeocdn.com/01/651/1/28259893/63220624.mp4?expires=1476213207&token=067d202372b80379979cb");
+        this.customVideoPlayer.playVideoUrl("https://06-lvl3-pdl.vimeocdn.com/01/651/1/28259893/63220624.mp4?expires=1476292750&token=0f82612161ed6360393d6");
     }
 
     @Override
