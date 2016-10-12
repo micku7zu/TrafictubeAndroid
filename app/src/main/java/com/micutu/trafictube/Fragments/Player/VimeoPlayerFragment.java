@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.micutu.trafictube.Crawler.VimeoCrawler;
 import com.micutu.trafictube.Views.Player.CustomVideoPlayer;
 
 
@@ -28,12 +29,24 @@ public class VimeoPlayerFragment extends Fragment implements PlayerFragment {
 
     @Override
     public void initialization(InitializationListener initializationListener) {
-        this.customVideoPlayer.playVideoUrl("https://06-lvl3-pdl.vimeocdn.com/01/651/1/28259893/63220624.mp4?expires=1476292750&token=0f82612161ed6360393d6");
+        initializationListener.onInitialization(true);
     }
 
     @Override
     public void playVideo(String id) {
-
+        VimeoCrawler.getVimeoVideoDirectUrl(getContext(), "https://player.vimeo.com/video/" + id + "?autoplay=1&byline=0&portrait=0&color=FFD602",
+                new VimeoCrawler.VimeoResponse() {
+                    @Override
+                    public void onResponse(final String vimeoDirectUrl) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Log.d("TEST", vimeoDirectUrl);
+                                VimeoPlayerFragment.this.customVideoPlayer.playVideoUrl(vimeoDirectUrl);
+                            }
+                        });
+                    }
+                });
     }
 
     @Override

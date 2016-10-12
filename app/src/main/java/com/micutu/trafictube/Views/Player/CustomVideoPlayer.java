@@ -38,25 +38,13 @@ public class CustomVideoPlayer extends RelativeLayout implements MediaPlayer.OnP
 
     public void init() {
         inflate(this.context, R.layout.custom_video_player, this);
-
         this.videoView = (VideoView) this.findViewById(R.id.video_player_video_view);
-        this.customMediaController = (CustomMediaController) this.findViewById(R.id.video_player_custom_media_controller);
-
-        this.customMediaController.setMediaPlayer(this.videoView);
-        this.customMediaController.setEnabled(true);
-        //this.videoView.setMediaController(new MediaControllerAbstract(this.context, this.customMediaController));
-
     }
 
     public void playVideoUrl(String URL) {
         this.videoView.setVideoURI(Uri.parse(URL));
-
-        this.videoView.setOnTouchListener(this);
         this.videoView.setOnPreparedListener(this);
-
         this.videoView.start();
-        this.customMediaController.initialization();
-
     }
 
     @Override
@@ -69,7 +57,14 @@ public class CustomVideoPlayer extends RelativeLayout implements MediaPlayer.OnP
     public boolean onInfo(MediaPlayer mediaPlayer, int i, int i1) {
         if (i == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
             this.videoView.setBackgroundResource(android.R.color.transparent);
+
+            this.customMediaController = (CustomMediaController) this.findViewById(R.id.video_player_custom_media_controller);
+            this.customMediaController.setMediaPlayer(this.videoView);
+            this.customMediaController.setEnabled(true);
+            this.customMediaController.initialization();
             this.customMediaController.show();
+
+            this.videoView.setOnTouchListener(this);
         }
 
         return false;
