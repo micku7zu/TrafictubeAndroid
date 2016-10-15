@@ -55,7 +55,6 @@ public class NormalPosts {
         }
 
         String link = getPageUrl(page, mode, value);
-        Log.d(TAG, "Request, page:" + page + " - link:" + link);
 
         StringRequest request = new StringRequest(Request.Method.GET, link,
                 new Response.Listener<String>() {

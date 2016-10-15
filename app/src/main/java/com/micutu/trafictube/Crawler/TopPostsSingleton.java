@@ -143,16 +143,12 @@ public class TopPostsSingleton {
     private void getContent(Context context, final TopPostsSingleton.Response response) {
         TopPostsSingleton instance = getInstance();
 
-        Log.d(TAG, "Difference in time: " + (getCurrentTime() - instance.lastUpdate));
-
         /* 5 minute cache */
         if (instance.content == null || (getCurrentTime() - instance.lastUpdate) > 300) {
-            Log.d(TAG, "Get new content");
             getNewContent(context, response);
             return;
         }
 
-        Log.d(TAG, "Get content from cache");
         response.onResponse(instance.content);
     }
 
@@ -173,7 +169,6 @@ public class TopPostsSingleton {
             }
         });
 
-        Log.d(TAG, "Make request");
         VolleySingleton.makeRequest(context, request);
     }
 

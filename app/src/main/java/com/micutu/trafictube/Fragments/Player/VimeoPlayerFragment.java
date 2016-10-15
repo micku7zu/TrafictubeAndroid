@@ -42,7 +42,6 @@ public class VimeoPlayerFragment extends Fragment implements PlayerFragment {
                     return;
                 }
 
-                Log.d("TEST", "URL: " + vimeoDirectUrl);
                 if (vimeoDirectUrl.length() < 5) {
                     Toast.makeText(getContext(), "Eroare :(", Toast.LENGTH_SHORT).show();
                     return;
