@@ -68,7 +68,6 @@ public class NormalPosts {
                             if (posts.size() >= 20) { //only if we have more than 20 posts we need to chck if we have more pages
                                 NormalPosts.this.haveNextPage = haveMorePageFromPageContent(response);
                             }
-                            Log.d("TEST", "HAVE NEXT PAGE1: " + posts.size() +  " - " + NormalPosts.this.haveNextPage);
 
                             listener.onResponse(posts, (new HashMap<String, Object>() {{
                                 put("haveNextPage", NormalPosts.this.haveNextPage);
@@ -123,7 +122,7 @@ public class NormalPosts {
     public static List<Post> getLatestPostsFromPageContent(String content) {
         List<Post> posts = new ArrayList<Post>();
 
-        if (content.contains("page-description\">Niciun post")) {
+        if (content.contains("page-description\">Niciun video")) {
             return posts;
         }
 
