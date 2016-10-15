@@ -38,6 +38,10 @@ public class VimeoPlayerFragment extends Fragment implements PlayerFragment {
         VimeoCrawler.getVimeoVideoDirectUrlSavedeo(getContext(), id, new VimeoCrawler.VimeoResponse() {
             @Override
             public void onResponse(final String vimeoDirectUrl) {
+                if (getContext() == null) {
+                    return;
+                }
+
                 Log.d("TEST", "URL: " + vimeoDirectUrl);
                 if (vimeoDirectUrl.length() < 5) {
                     Toast.makeText(getContext(), "Eroare :(", Toast.LENGTH_SHORT).show();

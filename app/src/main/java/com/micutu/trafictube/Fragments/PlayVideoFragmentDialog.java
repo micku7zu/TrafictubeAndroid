@@ -24,11 +24,13 @@ public class PlayVideoFragmentDialog extends DialogFragment implements PlayerFra
     private PlayerFragment playerFragment = null;
     private Video video = null;
     private Post post = null;
+    private Boolean dismissed = null;
 
     public PlayVideoFragmentDialog() {
         this.post = null;
         this.video = null;
         this.playerFragment = null;
+        this.dismissed = false;
     }
 
     public void play(Video video) {
@@ -41,6 +43,10 @@ public class PlayVideoFragmentDialog extends DialogFragment implements PlayerFra
         GetPostSingleton.getPostVideo(getActivity(), post.getLink(), new VideoResponse() {
             @Override
             public void onResponse(Video video, Map<String, Object> extra) {
+                if (PlayVideoFragmentDialog.this.getDialog() == null) {
+                    return;
+                }
+
                 if (video == null) {
                     PlayVideoFragmentDialog.this.showError();
                     return;
@@ -79,7 +85,6 @@ public class PlayVideoFragmentDialog extends DialogFragment implements PlayerFra
     }
 
     public void createFragmentAndInit(Video video) {
-        System.out.println(video.getId());
         this.hideProgressBar();
         this.playerFragment = null;
 
