@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.VideoView;
 
@@ -14,6 +15,7 @@ import com.micutu.trafictube.R;
 public class CustomVideoPlayer extends RelativeLayout implements MediaPlayer.OnPreparedListener, MediaPlayer.OnInfoListener, View.OnTouchListener {
 
     private final Context context;
+    private ProgressBar progressBar;
     private VideoView videoView;
     private CustomMediaController customMediaController;
     private MediaPlayer mediaPlayer;
@@ -39,6 +41,7 @@ public class CustomVideoPlayer extends RelativeLayout implements MediaPlayer.OnP
     public void init() {
         inflate(this.context, R.layout.view_custom_video_player, this);
         this.videoView = (VideoView) this.findViewById(R.id.video_player_video_view);
+        this.progressBar = (ProgressBar) this.findViewById(R.id.progress_bar_custom_video_player);
     }
 
     public void playVideoUrl(String URL) {
@@ -57,6 +60,7 @@ public class CustomVideoPlayer extends RelativeLayout implements MediaPlayer.OnP
     public boolean onInfo(MediaPlayer mediaPlayer, int i, int i1) {
         if (i == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
             this.videoView.setBackgroundResource(android.R.color.transparent);
+            this.progressBar.setVisibility(GONE);
 
             this.customMediaController = (CustomMediaController) this.findViewById(R.id.video_player_custom_media_controller);
             this.customMediaController.setMediaPlayer(this.videoView);
