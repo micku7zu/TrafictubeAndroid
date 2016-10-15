@@ -1,6 +1,8 @@
 package com.micutu.trafictube.Views.Player;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -45,6 +47,7 @@ public class CustomMediaController extends FrameLayout {
     private CharSequence mPlayDescription;
     private CharSequence mPauseDescription;
     private final AccessibilityManager accessibilityManager;
+    private CustomVideoPlayer.RotateButtonListener rotateButtonListener = null;
 
     public CustomMediaController(Context context) {
         super(context);
@@ -92,7 +95,6 @@ public class CustomMediaController extends FrameLayout {
         if (mRewButton != null) {
             mRewButton.setOnClickListener(mRewListener);
             mRewButton.setVisibility(View.VISIBLE);
-
         }
         // By default these are hidden. They will be enabled when setPrevNextListeners() is called
         mNextButton = (ImageButton) v.findViewById(R.id.next);
@@ -103,6 +105,9 @@ public class CustomMediaController extends FrameLayout {
         if (mPrevButton != null && !mListenersSet) {
             mPrevButton.setVisibility(View.GONE);
         }
+
+        ((ImageButton) v.findViewById(R.id.orientation)).setOnClickListener(mRotateButtonClickListener);
+
         mProgress = (SeekBar) v.findViewById(R.id.mediacontroller_progress);
         if (mProgress != null) {
             if (mProgress instanceof SeekBar) {
@@ -144,6 +149,13 @@ public class CustomMediaController extends FrameLayout {
         }
     }
 
+    private final View.OnClickListener mRotateButtonClickListener = new OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            CustomMediaController.this.rotateButtonListener.onRotateButtonClick();
+        }
+    };
+
     private final View.OnClickListener mPauseListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -166,10 +178,10 @@ public class CustomMediaController extends FrameLayout {
             return;
 
         if (mPlayer.isPlaying()) {
-            mPauseButton.setImageResource(android.R.drawable.ic_media_pause);
+            mPauseButton.setImageResource(R.drawable.player_pause);
             mPauseButton.setContentDescription(mPauseDescription);
         } else {
-            mPauseButton.setImageResource(android.R.drawable.ic_media_play);
+            mPauseButton.setImageResource(R.drawable.player_play);
             mPauseButton.setContentDescription(mPlayDescription);
         }
     }
@@ -409,4 +421,7 @@ public class CustomMediaController extends FrameLayout {
         updatePausePlay();
     }
 
+    public void setRotateButtonListener(CustomVideoPlayer.RotateButtonListener rotateButtonListener) {
+        this.rotateButtonListener = rotateButtonListener;
+    }
 }

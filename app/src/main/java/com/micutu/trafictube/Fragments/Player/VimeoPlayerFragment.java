@@ -1,5 +1,7 @@
 package com.micutu.trafictube.Fragments.Player;
 
+import android.app.Activity;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,7 +15,7 @@ import com.micutu.trafictube.Crawler.VimeoCrawler;
 import com.micutu.trafictube.Views.Player.CustomVideoPlayer;
 
 
-public class VimeoPlayerFragment extends Fragment implements PlayerFragment {
+public class VimeoPlayerFragment extends Fragment implements PlayerFragment, CustomVideoPlayer.RotateButtonListener {
 
     private CustomVideoPlayer customVideoPlayer = null;
 
@@ -50,6 +52,7 @@ public class VimeoPlayerFragment extends Fragment implements PlayerFragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        VimeoPlayerFragment.this.customVideoPlayer.setRotateButtonListener(VimeoPlayerFragment.this);
                         VimeoPlayerFragment.this.customVideoPlayer.playVideoUrl(vimeoDirectUrl);
                     }
                 });
@@ -67,4 +70,15 @@ public class VimeoPlayerFragment extends Fragment implements PlayerFragment {
         return null;
     }
 
+    @Override
+    public void onRotateButtonClick() {
+        Boolean landscape = (getResources().getDisplayMetrics().widthPixels > getResources().getDisplayMetrics().heightPixels);
+        getActivity().setRequestedOrientation((landscape) ? ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT : ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+    }
 }

@@ -19,6 +19,7 @@ public class CustomVideoPlayer extends RelativeLayout implements MediaPlayer.OnP
     private VideoView videoView;
     private CustomMediaController customMediaController;
     private MediaPlayer mediaPlayer;
+    private RotateButtonListener rotateButtonListener = null;
 
     public CustomVideoPlayer(Context context) {
         super(context);
@@ -64,6 +65,7 @@ public class CustomVideoPlayer extends RelativeLayout implements MediaPlayer.OnP
 
             this.customMediaController = (CustomMediaController) this.findViewById(R.id.video_player_custom_media_controller);
             this.customMediaController.setMediaPlayer(this.videoView);
+            this.customMediaController.setRotateButtonListener(this.rotateButtonListener);
             this.customMediaController.setEnabled(true);
             this.customMediaController.initialization();
             this.customMediaController.show();
@@ -82,5 +84,14 @@ public class CustomVideoPlayer extends RelativeLayout implements MediaPlayer.OnP
             this.customMediaController.show();
         }
         return false;
+    }
+
+    public void setRotateButtonListener(RotateButtonListener rotateButtonListener) {
+        this.rotateButtonListener = rotateButtonListener;
+    }
+
+
+    public interface RotateButtonListener {
+        public void onRotateButtonClick();
     }
 }
