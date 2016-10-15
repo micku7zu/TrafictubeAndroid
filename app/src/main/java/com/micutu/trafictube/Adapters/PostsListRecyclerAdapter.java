@@ -54,10 +54,10 @@ public class PostsListRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == LOADING_TYPE) {
-            return new LoadingListViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.loading_list_view_holder, parent, false));
+            return new LoadingListViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_loading, parent, false));
         }
 
-        return new PostsListViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_item, parent, false), this.postsActionsListener);
+        return new PostsListViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_cardview, parent, false), this.postsActionsListener);
     }
 
     @Override

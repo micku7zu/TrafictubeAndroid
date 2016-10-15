@@ -19,7 +19,7 @@ public class UserPostsActivity extends AppCompatPlayVideoActivity implements Pos
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_posts_activity);
+        setContentView(R.layout.activity_user_posts);
         init();
 
         Fragment fragment = new PostsListFragment();

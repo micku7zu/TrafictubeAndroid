@@ -14,7 +14,6 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
 import com.micutu.trafictube.Adapters.PostsListRecyclerAdapter;
-import com.micutu.trafictube.Adapters.ViewHolders.PostsListViewHolder;
 import com.micutu.trafictube.Adapters.ViewHolders.PostsListViewHolder.PostsActionsListener;
 import com.micutu.trafictube.Crawler.NormalPosts;
 import com.micutu.trafictube.Crawler.TopPostsSingleton;
@@ -45,7 +44,7 @@ public class PostsListFragment extends Fragment implements PostsListResponse {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         this.context = inflater.getContext();
         this.menuId = getArguments().getInt(MENU_ID);
-        root = inflater.inflate(R.layout.posts_list_fragment, container, false);
+        root = inflater.inflate(R.layout.fragment_posts_list, container, false);
         loadPosts();
         return root;
     }

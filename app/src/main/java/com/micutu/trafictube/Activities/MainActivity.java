@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatPlayVideoActivity implements PostsAct
     @Override
     public void showSearchDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        @SuppressLint("InflateParams") final View searchDialog = this.getLayoutInflater().inflate(R.layout.search_dialog_content, null);
+        @SuppressLint("InflateParams") final View searchDialog = this.getLayoutInflater().inflate(R.layout.dialog_search, null);
 
         final EditText searchEditText = (EditText) searchDialog.findViewById(R.id.search_edit_text);
         builder.setTitle(R.string.search_dialog_title)

@@ -54,7 +54,7 @@ public class PlayVideoFragmentDialog extends DialogFragment implements PlayerFra
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.play_video_fragment_dialog, container);
+        View view = inflater.inflate(R.layout.fragment_dialog_play_video, container);
 
         view.findViewById(R.id.retry_button).setOnClickListener(this);
         return view;

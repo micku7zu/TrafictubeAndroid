@@ -37,7 +37,7 @@ public class CustomVideoPlayer extends RelativeLayout implements MediaPlayer.OnP
     }
 
     public void init() {
-        inflate(this.context, R.layout.custom_video_player, this);
+        inflate(this.context, R.layout.view_custom_video_player, this);
         this.videoView = (VideoView) this.findViewById(R.id.video_player_video_view);
     }
 
