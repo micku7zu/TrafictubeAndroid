@@ -52,8 +52,8 @@
 
         <!-- navigation -->
         <item name="attrLogoNavigationHeader">@drawable/trafictube_logo_transparent_black</item>
-        <item name="attrNavigationHeaderBackground">@color/theme2ColorAccent</item>
-        <item name="attrNavigationBackground">@color/theme2ColorPrimary</item>
+        <item name="attrNavigationHeaderBackground">@drawable/theme2_background</item>
+        <item name="attrNavigationBackground">@color/theme2ColorPrimaryDark</item>
         <item name="attrNavigationTextColor">@android:color/white</item>
 
         <!-- card -->
