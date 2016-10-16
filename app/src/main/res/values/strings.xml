@@ -25,4 +25,5 @@
     <string name="no">Nu</string>
     <string name="trafictube">Trafictube.ro</string>
     <string name="dialog_theme_title">Alege tema</string>
+    <string name="theme_item">Schimbă tema</string>
 </resources>

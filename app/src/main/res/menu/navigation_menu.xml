@@ -44,6 +44,12 @@
     <group
         android:id="@+id/menu_bottom"
         android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/theme"
+            android:checked="false"
+            android:icon="@drawable/ic_theme"
+            android:title="@string/theme_item"/>
         <item
             android:id="@+id/about"
             android:checked="false"
