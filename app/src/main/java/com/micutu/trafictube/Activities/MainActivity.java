@@ -118,7 +118,8 @@ public class MainActivity extends AppCompatPlayVideoActivity implements PostsAct
     }
 
     private void openThemeChangeDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getAlertDialogThemedContext(this));
+
         builder.setTitle(R.string.dialog_theme_title)
                 .setItems(R.array.themes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -131,7 +132,7 @@ public class MainActivity extends AppCompatPlayVideoActivity implements PostsAct
 
     @Override
     public void showSearchDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getAlertDialogThemedContext(this));
         @SuppressLint("InflateParams") final View searchDialog = this.getLayoutInflater().inflate(R.layout.dialog_search, null);
 
         final EditText searchEditText = (EditText) searchDialog.findViewById(R.id.search_edit_text);
@@ -173,7 +174,7 @@ public class MainActivity extends AppCompatPlayVideoActivity implements PostsAct
 
     @Override
     public void onBackPressed() {
-        new AlertDialog.Builder(this)
+        new AlertDialog.Builder(getAlertDialogThemedContext(this))
                 .setTitle(R.string.dialog_exit_title)
                 .setMessage(R.string.dialog_exit_text)
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {

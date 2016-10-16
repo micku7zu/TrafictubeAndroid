@@ -8,5 +8,6 @@
         android:layout_height="match_parent"
         android:inputType="text"
         android:id="@+id/search_edit_text"
-        android:layout_margin="16dp"/>
+        android:layout_margin="16dp"
+        android:textColor="?attrTextColor"/>
 </LinearLayout>

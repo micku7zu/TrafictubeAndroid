@@ -6,6 +6,8 @@
         <item name="colorAccent">?attrColorAccent</item>
     </style>
 
+
+    <!-- Theme 1 -->
     <style name="Theme1" parent="@style/ThemePrimary">
         <item name="attrColorPrimary">@color/theme1ColorPrimary</item>
         <item name="attrColorPrimaryDark">@color/theme1ColorPrimaryDark</item>
@@ -29,6 +31,15 @@
         <item name="attrCardTitleTransparentBackgroundColor">@color/transparentTitleColor</item>
     </style>
 
+    <style name="Theme1Dialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorPrimary">@color/theme1ColorPrimary</item>
+        <item name="colorPrimaryDark">@color/theme1ColorPrimaryDark</item>
+        <item name="colorAccent">@color/theme1ColorAccent</item>
+    </style>
+    <!-- end Theme 1 -->
+
+
+    <!-- Theme 2 -->
     <style name="Theme2" parent="@style/ThemePrimary">
         <item name="attrColorPrimary">@color/theme2ColorPrimary</item>
         <item name="attrColorPrimaryDark">@color/theme2ColorPrimaryDark</item>
@@ -51,5 +62,12 @@
         <item name="attrCardTextColor">@android:color/white</item>
         <item name="attrCardTitleTransparentBackgroundColor">@color/transparentTitleColor</item>
     </style>
+
+    <style name="Theme2Dialog" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="colorPrimary">@color/theme2ColorPrimary</item>
+        <item name="colorPrimaryDark">@color/theme2ColorPrimaryDark</item>
+        <item name="colorAccent">@color/theme2ColorAccent</item>
+    </style>
+    <!-- end Theme 2 -->
 
 </resources>
