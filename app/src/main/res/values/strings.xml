@@ -19,4 +19,9 @@
     <string name="main_activity_label">Trafictube</string>
     <string name="user_posts_activity_label">Clipurile utilizatorului</string>
     <string name="user_posts_of">Clipurile lui</string>
+    <string name="dialog_exit_title">Ieșire</string>
+    <string name="dialog_exit_text">Ești sigur că vrei să închizi Trafictube?</string>
+    <string name="yes">Da</string>
+    <string name="no">Nu</string>
+    <string name="trafictube">Trafictube.ro</string>
 </resources>

@@ -3,6 +3,7 @@ package com.micutu.trafictube.Activities;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.app.Fragment;
@@ -99,11 +100,20 @@ public class MainActivity extends AppCompatPlayVideoActivity implements PostsAct
             case R.id.about:
                 this.showAboutFragment();
                 return false;
+            case R.id.trafictube:
+                this.openTrafictubeWebsite();
+                return false;
         }
 
         switchFragment(item.getItemId());
         return false;
     }
+
+    private void openTrafictubeWebsite() {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.trafictube.ro"));
+        startActivity(browserIntent);
+    }
+
 
     @Override
     public void showSearchDialog() {
@@ -145,5 +155,21 @@ public class MainActivity extends AppCompatPlayVideoActivity implements PostsAct
         intent.putExtra(UserPostsActivity.USERNAME, user.getUsername());
         intent.putExtra(UserPostsActivity.USER_NAME, user.getName());
         startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.dialog_exit_title)
+                .setMessage(R.string.dialog_exit_text)
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+
+                })
+                .setNegativeButton(R.string.no, null)
+                .show();
     }
 }

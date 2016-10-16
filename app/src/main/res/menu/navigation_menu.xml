@@ -49,5 +49,10 @@
             android:checked="false"
             android:icon="@drawable/ic_about"
             android:title="@string/despre"/>
+        <item
+            android:id="@+id/trafictube"
+            android:checked="false"
+            android:icon="@drawable/ic_launch"
+            android:title="@string/trafictube"/>
     </group>
 </menu>
