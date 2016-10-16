@@ -3,5 +3,6 @@
     <string-array name="themes">
         <item>Tema 1</item>
         <item>Tema 2</item>
+        <item>Tema 3</item>
     </string-array>
 </resources>

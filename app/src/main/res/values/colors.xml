@@ -13,6 +13,17 @@
     <color name="theme2ColorAccent">#ffd602</color>
     <color name="theme2BackgroundColor">#333333</color>
 
+    <!-- theme 3 -->
+    <color name="theme3ColorPrimary">#263238</color>
+    <color name="theme3ColorPrimaryDark">#1d272b</color>
+    <color name="theme3ColorAccent">#8398af</color>
+    <color name="theme3NavigationBackground">#1a1a1a</color>
+    <color name="theme3BackgroundColor">#121213</color>
+    <color name="theme3CardBackgroundColor">#252525</color>
+    <color name="theme3LightColor">#8398af</color>
+    <color name="theme3TextColorGray">#e1e3e4</color>
+    <color name="theme3TransparentTitleColor">#AA263238</color>
+
 
     <color name="transparentTitleColor">#80000000</color>
     <color name="cardBackground">#FFFFFF</color>

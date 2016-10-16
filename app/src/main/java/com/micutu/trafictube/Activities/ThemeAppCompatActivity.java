@@ -12,8 +12,6 @@ import com.micutu.trafictube.R;
 
 public abstract class ThemeAppCompatActivity extends AppCompatActivity {
     private final static String SHARED_PREFERENCES_KEY = "theme";
-    private final static int THEME1 = 0;
-    private final static int THEME2 = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +46,8 @@ public abstract class ThemeAppCompatActivity extends AppCompatActivity {
                 return R.style.Theme1;
             case 1:
                 return R.style.Theme2;
+            case 2:
+                return R.style.Theme3;
         }
 
         return R.style.Theme1;
@@ -59,6 +59,8 @@ public abstract class ThemeAppCompatActivity extends AppCompatActivity {
                 return R.style.Theme1Dialog;
             case 1:
                 return R.style.Theme2Dialog;
+            case 2:
+                return R.style.Theme3Dialog;
         }
 
         return R.style.Theme1Dialog;

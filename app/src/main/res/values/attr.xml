@@ -24,6 +24,7 @@
     <attr name="attrCardTitleTextColor" format="reference|color" />
     <attr name="attrCardBottomBackgroundColor" format="reference|color" />
     <attr name="attrCardTextColor" format="reference|color" />
+    <attr name="attrCardIconColor" format="reference|color" />
 
 
 </resources>
