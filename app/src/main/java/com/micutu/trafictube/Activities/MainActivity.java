@@ -42,6 +42,20 @@ public class MainActivity extends AppCompatPlayVideoActivity implements PostsAct
         switchFragment(R.id.latest);
     }
 
+    private final View.OnClickListener logoOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setTitle(R.string.dialog_theme_title)
+                    .setItems(R.array.themes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            AppCompatPlayVideoActivity.setTheme(MainActivity.this, which);
+                        }
+                    });
+            builder.create().show();
+        }
+    };
+
     public void init() {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -50,6 +64,8 @@ public class MainActivity extends AppCompatPlayVideoActivity implements PostsAct
 
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        navigationView.getHeaderView(0).findViewById(R.id.trafictube_logo).setOnClickListener(logoOnClickListener);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

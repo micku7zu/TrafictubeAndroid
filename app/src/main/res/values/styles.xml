@@ -1,11 +1,55 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    <style name="ThemePrimary" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">?attrColorPrimary</item>
+        <item name="colorPrimaryDark">?attrColorPrimaryDark</item>
+        <item name="colorAccent">?attrColorAccent</item>
+    </style>
+
+    <style name="Theme1" parent="@style/ThemePrimary">
+        <item name="attrColorPrimary">@color/theme1ColorPrimary</item>
+        <item name="attrColorPrimaryDark">@color/theme1ColorPrimaryDark</item>
+        <item name="attrColorAccent">@color/theme1ColorAccent</item>
+        <item name="attrTitleTextColor">@android:color/white</item>
+        <item name="attrBackgroundColor">@color/theme1BackgroundColor</item>
+        <item name="attrButtonTextColor">@android:color/white</item>
+        <item name="attrTextColor">@android:color/black</item>
+
+        <!-- navigation -->
+        <item name="attrLogoNavigationHeader">@drawable/trafictube_logo_transparent_white</item>
+        <item name="attrNavigationHeaderBackground">@color/theme1ColorPrimary</item>
+        <item name="attrNavigationBackground">@android:color/white</item>
+        <item name="attrNavigationTextColor">@color/theme1ColorPrimaryDark</item>
+
+        <!-- card -->
+        <item name="attrCardBackgroundColor">@color/cardBackground</item>
+        <item name="attrCardTitleTextColor">@android:color/white</item>
+        <item name="attrCardBottomBackgroundColor">@android:color/white</item>
+        <item name="attrCardTextColor">?attrColorPrimary</item>
+        <item name="attrCardTitleTransparentBackgroundColor">@color/transparentTitleColor</item>
+    </style>
+
+    <style name="Theme2" parent="@style/ThemePrimary">
+        <item name="attrColorPrimary">@color/theme2ColorPrimary</item>
+        <item name="attrColorPrimaryDark">@color/theme2ColorPrimaryDark</item>
+        <item name="attrColorAccent">@color/theme2ColorAccent</item>
+        <item name="attrTitleTextColor">@color/theme2ColorAccent</item>
+        <item name="attrBackgroundColor">@color/theme2BackgroundColor</item>
+        <item name="attrButtonTextColor">@android:color/black</item>
+        <item name="attrTextColor">@android:color/white</item>
+
+        <!-- navigation -->
+        <item name="attrLogoNavigationHeader">@drawable/trafictube_logo_transparent_black</item>
+        <item name="attrNavigationHeaderBackground">@color/theme2ColorAccent</item>
+        <item name="attrNavigationBackground">@color/theme2ColorPrimary</item>
+        <item name="attrNavigationTextColor">@android:color/white</item>
+
+        <!-- card -->
+        <item name="attrCardBackgroundColor">@color/theme2ColorPrimaryDark</item>
+        <item name="attrCardTitleTextColor">@android:color/white</item>
+        <item name="attrCardBottomBackgroundColor">@color/theme2ColorPrimary</item>
+        <item name="attrCardTextColor">@android:color/white</item>
+        <item name="attrCardTitleTransparentBackgroundColor">@color/transparentTitleColor</item>
     </style>
 
 </resources>

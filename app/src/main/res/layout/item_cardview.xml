@@ -6,7 +6,8 @@
     android:layout_height="wrap_content"
     android:layout_marginLeft="8dp"
     android:layout_marginRight="8dp"
-    android:layout_marginTop="8dp">
+    android:layout_marginTop="8dp"
+    android:backgroundTint="?attrCardBackgroundColor">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,7 +37,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left|top"
-                    android:background="@color/colorTransparentTitle"
+                    android:background="?attrCardTitleTransparentBackgroundColor"
                     android:orientation="vertical">
 
                     <TextView
@@ -44,7 +45,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="16dp"
-                        android:textColor="#FFFFFF"
+                        android:textColor="?attrCardTitleTextColor"
                         android:textSize="@dimen/text_size"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -56,7 +57,8 @@
             android:layout_height="0dip"
             android:layout_weight="0.8"
             android:gravity="center|right"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:background="?attrCardBottomBackgroundColor">
 
             <TextView
                 android:id="@+id/more"
@@ -64,7 +66,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_weight="1"
-                android:textColor="@color/colorAccent"
+                android:textColor="?attrCardTextColor"
                 android:textSize="12sp" />
 
             <com.micutu.trafictube.Views.AppCompatImageButtonWithTooltip

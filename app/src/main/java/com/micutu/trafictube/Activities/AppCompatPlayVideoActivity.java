@@ -6,7 +6,7 @@ import com.micutu.trafictube.Adapters.ViewHolders.PostsListViewHolder.PostsActio
 import com.micutu.trafictube.Data.Post;
 import com.micutu.trafictube.Fragments.PlayVideoFragmentDialog;
 
-public abstract class AppCompatPlayVideoActivity extends AppCompatActivity implements PostsActionsListener {
+public abstract class AppCompatPlayVideoActivity extends ThemeAppCompatActivity implements PostsActionsListener {
     private PlayVideoFragmentDialog playVideoFragmentDialog = null;
 
     public AppCompatPlayVideoActivity() {

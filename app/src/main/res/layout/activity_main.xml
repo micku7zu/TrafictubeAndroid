@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:background="?attrBackgroundColor"
     tools:context=".Activities.MainActivity">
 
     <FrameLayout
@@ -16,10 +17,12 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="?attrColorPrimary"
             android:elevation="4dp"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+            app:subtitleTextColor="?attrTitleTextColor"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:titleTextColor="?attrTitleTextColor" />
 
         <FrameLayout
             android:id="@+id/frame_layout"
@@ -32,6 +35,9 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:background="?attrNavigationBackground"
+        app:itemIconTint="?attrNavigationTextColor"
+        app:itemTextColor="?attrNavigationTextColor"
         app:headerLayout="@layout/navigation_header"
         app:menu="@menu/navigation_menu" />
 

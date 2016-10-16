@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- general -->
+    <attr name="attrColorPrimary" format="reference|color" />
+    <attr name="attrColorPrimaryDark" format="reference|color" />
+    <attr name="attrColorAccent" format="reference|color" />
+    <attr name="attrBackgroundColor" format="reference|color" />
+    <attr name="attrTextColor" format="reference|color" />
+
+    <attr name="attrTitleTextColor" format="reference|color" />
+    <attr name="attrButtonTextColor" format="reference|color" />
+
+
+    <!-- navigation view -->
+    <attr name="attrLogoNavigationHeader" format="reference" />
+    <attr name="attrNavigationHeaderBackground" format="reference|color" />
+    <attr name="attrNavigationBackground" format="reference|color" />
+    <attr name="attrNavigationTextColor" format="reference|color" />
+
+    <!-- card -->
+    <attr name="attrCardBackgroundColor" format="reference|color" />
+    <attr name="attrCardTitleTransparentBackgroundColor" format="reference|color" />
+    <attr name="attrCardTitleTextColor" format="reference|color" />
+    <attr name="attrCardBottomBackgroundColor" format="reference|color" />
+    <attr name="attrCardTextColor" format="reference|color" />
+
+
+</resources>

@@ -29,6 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/error_loading"
+            android:textColor="?attrTextColor"
             android:textAlignment="center" />
 
         <android.support.v7.widget.AppCompatButton
@@ -36,9 +37,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:backgroundTint="@color/colorAccent"
+            android:backgroundTint="?attrColorAccent"
             android:text="@string/retry_text"
-            android:textColor="@android:color/white" />
+            android:textColor="?attrButtonTextColor" />
     </LinearLayout>
 
 </FrameLayout>

@@ -1,12 +1,17 @@
 package com.micutu.trafictube.Fragments;
 
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
+import android.widget.RelativeLayout;
 
 import com.micutu.trafictube.Crawler.GetPostSingleton;
 import com.micutu.trafictube.Crawler.Responses.VideoResponse;
@@ -67,13 +72,21 @@ public class PlayVideoFragmentDialog extends DialogFragment implements PlayerFra
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_Material_NoActionBar_Fullscreen);
+    public Dialog onCreateDialog(final Bundle savedInstanceState) {
+        final RelativeLayout root = new RelativeLayout(getActivity());
+        root.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
-        WindowManager.LayoutParams a = getActivity().getWindow().getAttributes();
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(root);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.YELLOW));
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
+        WindowManager.LayoutParams a = dialog.getWindow().getAttributes();
         a.dimAmount = 0;
-        getActivity().getWindow().setAttributes(a);
+        dialog.getWindow().setAttributes(a);
+
+        return dialog;
     }
 
     public void hideProgressBar() {
