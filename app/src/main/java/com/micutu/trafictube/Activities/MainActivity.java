@@ -174,6 +174,10 @@ public class MainActivity extends AppCompatPlayVideoActivity implements PostsAct
 
     @Override
     public void onBackPressed() {
+        if(!this.onBackPressedContinue()) {
+            return;
+        }
+
         new AlertDialog.Builder(getAlertDialogThemedContext(this))
                 .setTitle(R.string.dialog_exit_title)
                 .setMessage(R.string.dialog_exit_text)

@@ -33,6 +33,8 @@ public class PostsListViewHolder extends RecyclerView.ViewHolder implements View
         this.more = (TextView) itemView.findViewById(R.id.more);
         this.image = (NetworkImageView) itemView.findViewById(R.id.image);
 
+        this.title.setOnClickListener(this);
+        this.image.setOnClickListener(this);
         ((AppCompatImageButtonWithTooltip) itemView.findViewById(R.id.thumbs_up)).setOnClickListener(this);
         ((AppCompatImageButtonWithTooltip) itemView.findViewById(R.id.play_button)).setOnClickListener(this);
 
@@ -93,7 +95,15 @@ public class PostsListViewHolder extends RecyclerView.ViewHolder implements View
             case R.id.play_button:
                 onPlayButtonPressed(view);
                 break;
+            case R.id.title:
+            case R.id.image:
+                onPostClick(view);
+                break;
         }
+    }
+
+    public void onPostClick(View view) {
+        this.postsActionsListener.showPost(this.post);
     }
 
     public void onViewUserPressed(View view) {
@@ -110,6 +120,8 @@ public class PostsListViewHolder extends RecyclerView.ViewHolder implements View
 
 
     public interface PostsActionsListener {
+        public void showPost(Post post);
+
         public boolean showUsersPostsButton();
 
         public void showUserPosts(User user);
