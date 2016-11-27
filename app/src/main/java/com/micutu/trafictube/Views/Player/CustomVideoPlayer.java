@@ -61,7 +61,7 @@ public class CustomVideoPlayer extends RelativeLayout implements MediaPlayer.OnP
 
     @Override
     public boolean onInfo(MediaPlayer mediaPlayer, int i, int i1) {
-        if (i == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
+        if (i == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START && this.progressBar.getVisibility() != GONE) {
             this.videoView.setBackgroundResource(android.R.color.transparent);
             this.progressBar.setVisibility(GONE);
 
