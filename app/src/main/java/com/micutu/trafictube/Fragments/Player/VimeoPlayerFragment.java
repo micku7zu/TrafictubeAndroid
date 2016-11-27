@@ -37,7 +37,7 @@ public class VimeoPlayerFragment extends Fragment implements PlayerFragment, Cus
 
     @Override
     public void playVideo(String id) {
-        VimeoCrawler.getVimeoVideoDirectUrlSavedeo(getContext(), id, new VimeoCrawler.VimeoResponse() {
+        VimeoCrawler.getVimeoVideoDirectUrlYoutubeDl(getContext(), id, new VimeoCrawler.VimeoResponse() {
             @Override
             public void onResponse(final String vimeoDirectUrl) {
                 if (getContext() == null) {

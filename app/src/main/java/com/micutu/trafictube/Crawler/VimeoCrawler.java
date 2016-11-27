@@ -15,13 +15,20 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class VimeoCrawler {
 
 
     //find a good way to get vimeo video
-    public static void getVimeoVideoDirectUrlSavedeo(Context context, String vimeoId, final VimeoResponse vimeoResponse) {
-        StringRequest request = new StringRequest(Request.Method.GET, "https://qqvimeo.com/" + vimeoId,
+    public static void getVimeoVideoDirectUrlYoutubeDl(Context context, final String vimeoId, final VimeoResponse vimeoResponse) {
+        StringRequest request = new StringRequest(Request.Method.GET, "http://178.62.229.78:45321/api/info?url=https://vimeo.com/" + vimeoId,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -42,16 +49,30 @@ public class VimeoCrawler {
     }
 
     private static String parseQQVimeo(String content) {
-        String ret = "";
-
         try {
-            String[] temp = content.split("<span class=\"fa-download\"></span>")[0].split("href=\"");
-            ret = temp[temp.length - 1].split("\"")[0];
-            ret = Html.fromHtml(ret).toString();
-        } catch (Exception e) {
-        }
+            JSONObject json = new JSONObject(content);
+            JSONArray formats = json.getJSONObject("info").getJSONArray("formats");
 
-        return ret;
+            String url = "";
+            int max = 0;
+            for (int i = 0; i < formats.length(); i++) {
+                JSONObject format = formats.getJSONObject(i);
+
+                if (format.getString("format_id").contains("http")) {
+                    int resolution = format.getInt("height");
+                    if (resolution > max) {
+                        max = resolution;
+                        url = format.getString("url");
+                    }
+                }
+            }
+
+            return url;
+        } catch (Exception e) {
+            Log.d("TEST", "exceptie");
+            e.printStackTrace();
+            return "";
+        }
     }
 
     public static void getVimeoVideoDirectUrl(Context context, String vimeoUrl, final VimeoResponse vimeoResponse) {

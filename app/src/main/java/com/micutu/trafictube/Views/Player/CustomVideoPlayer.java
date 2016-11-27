@@ -4,6 +4,7 @@ import android.content.Context;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -46,6 +47,7 @@ public class CustomVideoPlayer extends RelativeLayout implements MediaPlayer.OnP
     }
 
     public void playVideoUrl(String URL) {
+        Log.d("TEST", URL);
         this.videoView.setVideoURI(Uri.parse(URL));
         this.videoView.setOnPreparedListener(this);
         this.videoView.start();
