@@ -36,31 +36,6 @@ public class TopPostsSingleton {
         return TopPostsSingleton.instance;
     }
 
-    public static void getPostOfTheDay(Context context, final PostListResponse listener) {
-        getInstance().getContent(context, new TopPostsSingleton.Response() {
-            @Override
-            public void onResponse(String content) {
-                try {
-                    if (content == null) {
-                        throw new Exception("Can't get content from site.");
-                    }
-
-                    listener.onResponse(getInstance().getPostOfTheDayFromResponse(content), new HashMap<String, Object>());
-                } catch (final Exception e) {
-                    listener.onResponse(null, (new HashMap<String, Object>() {{
-                        put("error", Log.getStackTraceString(e));
-                    }}));
-                }
-            }
-        });
-    }
-
-    private Post getPostOfTheDayFromResponse(String content) {
-        content = content.split("class=\"clipul-zilei\">")[1].split("<div class=\"site")[0];
-
-        return getPostFromHtml(content);
-    }
-
     public static void getGeneralTopPosts(Context context, final PostsListResponse listener) {
         getInstance().getContent(context, new TopPostsSingleton.Response() {
             @Override
@@ -121,7 +96,7 @@ public class TopPostsSingleton {
         return posts;
     }
 
-    private static Post getPostFromHtml(String html) {
+    public static Post getPostFromHtml(String html) {
         Post post = new Post();
         User user = new User();
 

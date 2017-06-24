@@ -5,12 +5,14 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.micutu.trafictube.Activities.Abstracts.PlayVideoActivity;
+import com.micutu.trafictube.Activities.Abstracts.PostsActivity;
 import com.micutu.trafictube.Adapters.ViewHolders.PostsListViewHolder.PostsActionsListener;
 import com.micutu.trafictube.Data.User;
 import com.micutu.trafictube.Fragments.PostsListFragment;
 import com.micutu.trafictube.R;
 
-public class UserPostsActivity extends AppCompatPlayVideoActivity implements PostsActionsListener {
+public class UserPostsActivity extends PostsActivity implements PostsActionsListener {
     public static final String USERNAME = "username";
     public static final String USER_NAME = "name";
 

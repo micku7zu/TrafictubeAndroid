@@ -1,6 +1,8 @@
 package com.micutu.trafictube.Data;
 
-public class Video {
+import java.io.Serializable;
+
+public class Video implements Serializable {
     public static int TYPE_YOUTUBE = 0;
     public static int TYPE_VIMEO = 1;
     public static int TYPE_OTHER = 2;

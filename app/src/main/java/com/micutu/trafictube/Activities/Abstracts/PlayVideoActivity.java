@@ -1,26 +1,19 @@
-package com.micutu.trafictube.Activities;
+package com.micutu.trafictube.Activities.Abstracts;
 
 import android.content.Intent;
 
+import com.micutu.trafictube.Activities.PostActivity;
 import com.micutu.trafictube.Adapters.ViewHolders.PostsListViewHolder.PostsActionsListener;
 import com.micutu.trafictube.Data.Post;
 import com.micutu.trafictube.Fragments.PlayVideoFragmentDialog;
 
-public abstract class AppCompatPlayVideoActivity extends ThemeAppCompatActivity implements PostsActionsListener {
+public abstract class PlayVideoActivity extends ThemeActivity {
     private PlayVideoFragmentDialog playVideoFragmentDialog = null;
 
-    public AppCompatPlayVideoActivity() {
+    public PlayVideoActivity() {
         this.playVideoFragmentDialog = null;
     }
 
-    @Override
-    public void showPost(Post post) {
-        Intent intent = new Intent(this, PostActivity.class);
-        intent.putExtra(PostActivity.BUNDLE_ID, post.getId());
-        startActivity(intent);
-    }
-
-    @Override
     public void showVideoDialog(Post post) {
         this.playVideoFragmentDialog = new PlayVideoFragmentDialog();
         this.playVideoFragmentDialog.show(getSupportFragmentManager(), null);

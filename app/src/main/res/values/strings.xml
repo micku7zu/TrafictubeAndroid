@@ -27,8 +27,10 @@
     <string name="trafictube">Trafictube.ro</string>
     <string name="dialog_theme_title">Alege tema</string>
     <string name="theme_item">Schimbă tema</string>
-    <string name="activity_post_label">Post video</string>
+    <string name="activity_post_label">Clip video</string>
     <string name="vimeo_install_text">Pentru a putea vedea un clip încărcat pe vimeo.com trebuie să aveți instalată aplicația Vimeo din Google Play Store.</string>
     <string name="youtube_install_text">Pentru a putea vedea un clip încărcat pe youtube.com trebuie să aveți instalată aplicația Youtube din Google Play Store.</string>
     <string name="install_button">Instalează aplicația</string>
+    <string name="error_loading_post_of_the_day">Nu pot să găsesc postul zilei.</string>
+    <string name="post_play_button">Pornește clip</string>
 </resources>

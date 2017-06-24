@@ -1,6 +1,8 @@
 package com.micutu.trafictube.Data;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
     private String name = null;
     private String username = null;
     private String avatar = null;

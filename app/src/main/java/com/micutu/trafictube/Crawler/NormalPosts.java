@@ -49,7 +49,7 @@ public class NormalPosts {
         nextPage();
     }
 
-    public void getPosts(Context context, Integer page, Integer mode, String value, final PostsListResponse listener) {
+    public void getPosts(final Context context, Integer page, Integer mode, String value, final PostsListResponse listener) {
         if (listener == null) {
             return;
         }
@@ -60,6 +60,8 @@ public class NormalPosts {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        PostOfTheDaySingleton.setPost(context, response);
+
                         try {
                             List<Post> posts = getLatestPostsFromPageContent(response);
 

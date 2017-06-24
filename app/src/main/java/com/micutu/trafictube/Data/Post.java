@@ -1,8 +1,9 @@
 package com.micutu.trafictube.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Post {
+public class Post implements Serializable {
     private Integer id = null;
     private String title = null;
     private User user = null;
@@ -92,7 +93,7 @@ public class Post {
 
     @Override
     public String toString() {
-        return this.getTitle() + " - " + this.getUser().getUsername();
+        return this.getId() + " - " + this.getTitle() + " - " + this.getUser().getUsername() + " - " + this.link;
     }
 
     public Video getVideo() {

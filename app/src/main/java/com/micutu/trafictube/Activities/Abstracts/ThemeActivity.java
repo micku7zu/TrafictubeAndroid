@@ -1,4 +1,4 @@
-package com.micutu.trafictube.Activities;
+package com.micutu.trafictube.Activities.Abstracts;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,7 +10,7 @@ import android.support.v7.view.ContextThemeWrapper;
 
 import com.micutu.trafictube.R;
 
-public abstract class ThemeAppCompatActivity extends AppCompatActivity {
+public abstract class ThemeActivity extends AppCompatActivity {
     private final static String SHARED_PREFERENCES_KEY = "theme";
 
     @Override

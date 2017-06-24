@@ -1,6 +1,8 @@
 package com.micutu.trafictube.Data;
 
-public class Comment {
+import java.io.Serializable;
+
+public class Comment implements Serializable{
     private Integer id = null;
     private User user = null;
     private String date = null;

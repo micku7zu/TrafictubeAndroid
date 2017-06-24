@@ -11,12 +11,6 @@
             android:title="@string/clipuri_noi" />
 
         <item
-            android:id="@+id/post_of_the_day"
-            android:checked="false"
-            android:icon="@drawable/ic_play"
-            android:title="@string/clipul_zilei" />
-
-        <item
             android:id="@+id/top_two_days"
             android:checked="false"
             android:icon="@drawable/ic_top1"
@@ -33,6 +27,13 @@
             android:checked="false"
             android:icon="@drawable/ic_top3"
             android:title="@string/top_general" />
+    </group>
+    <group>
+        <item
+            android:id="@+id/post_of_the_day"
+            android:checked="false"
+            android:icon="@drawable/ic_play"
+            android:title="@string/clipul_zilei" />
 
         <item
             android:id="@+id/search"
