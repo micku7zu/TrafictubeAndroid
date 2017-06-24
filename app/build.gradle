@@ -5,7 +5,7 @@ android {
     buildToolsVersion "25.0.0"
     defaultConfig {
         applicationId "com.micutu.trafictube"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 25
         versionCode 20
         versionName "2.0"
@@ -20,7 +20,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -31,4 +31,6 @@ dependencies {
     compile 'com.android.volley:volley:1.0.0'
     testCompile 'junit:junit:4.12'
     compile 'com.android.support.constraint:constraint-layout:1.1.0-beta1'
+    implementation files('libs/YouTubeAndroidPlayerApi.jar')
+    compile 'com.vimeo.android.deeplink:vimeo-deeplink:1.2.0'
 }

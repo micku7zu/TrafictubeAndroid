@@ -63,7 +63,7 @@ public class Post {
     }
 
     public void setTimeAgo(String timeAgo) {
-        this.timeAgo = timeAgo;
+        this.timeAgo = timeAgo.replace("Acum ", "");
     }
 
     public List<Comment> getComments() {

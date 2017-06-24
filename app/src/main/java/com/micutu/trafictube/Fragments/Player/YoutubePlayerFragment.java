@@ -1,9 +1,14 @@
 package com.micutu.trafictube.Fragments.Player;
 
+import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerSupportFragment;
 import com.micutu.trafictube.Activities.MainActivity;
+import com.micutu.trafictube.R;
 
 public class YoutubePlayerFragment extends YouTubePlayerSupportFragment implements PlayerFragment, YouTubePlayer.OnInitializedListener, YouTubePlayer.OnFullscreenListener {
 
@@ -45,15 +50,20 @@ public class YoutubePlayerFragment extends YouTubePlayerSupportFragment implemen
     }
 
     @Override
+    public Boolean isDeepLink() {
+        return false;
+    }
+
+    @Override
     public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean restored) {
         this.youTubePlayer = youTubePlayer;
         this.youTubePlayer.setOnFullscreenListener(this);
-        this.initializationListener.onInitialization(true);
+        this.initializationListener.onInitialization(InitializationListener.InitializationResponse.SUCCESS);
     }
 
     @Override
     public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
-        this.initializationListener.onInitialization(false);
+        this.initializationListener.onInitialization(InitializationListener.InitializationResponse.NOT_INSTALLED);
     }
 
     @Override

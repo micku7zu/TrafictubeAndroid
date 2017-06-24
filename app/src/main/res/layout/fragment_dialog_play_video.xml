@@ -25,12 +25,13 @@
         android:visibility="gone">
 
         <TextView
+            android:id="@+id/error_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/error_loading"
-            android:textColor="?attrTextColor"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textColor="@android:color/white" />
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/retry_button"

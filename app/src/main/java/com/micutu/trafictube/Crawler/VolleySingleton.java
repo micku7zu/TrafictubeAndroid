@@ -1,6 +1,7 @@
 package com.micutu.trafictube.Crawler;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -30,8 +31,13 @@ public class VolleySingleton {
     }
 
     public static void makeRequest(Context context, Request request) {
+        VolleySingleton.makeRequest(context, request, DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2);
+    }
+
+    public static void makeRequest(Context context, Request request, Integer timeout) {
         /* set default timeout and 2 retries */
-        request.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, 2, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        Log.d("REQUEST", request.getUrl() + ", TIMEOUT: " + timeout);
+        request.setRetryPolicy(new DefaultRetryPolicy(timeout, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         getInstance(context).queue.add(request);
     }
 

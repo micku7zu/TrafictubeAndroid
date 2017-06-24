@@ -169,7 +169,7 @@ public class TopPostsSingleton {
             }
         });
 
-        VolleySingleton.makeRequest(context, request);
+        VolleySingleton.makeRequest(context, request, 15000);
     }
 
     public static void getTwoDaysTopPosts(Context context, final PostsListResponse onResponse) {
@@ -193,7 +193,7 @@ public class TopPostsSingleton {
             }
         });
 
-        VolleySingleton.makeRequest(context, request);
+        VolleySingleton.makeRequest(context, request, 15000);
     }
 
     private static List<Post> getTwoDaysTopPostsFromResponse(String content) {

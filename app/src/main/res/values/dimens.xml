@@ -4,6 +4,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="card_height">240dp</dimen>
     <dimen name="text_size">14sp</dimen>
+    <dimen name="small_text_size">10sp</dimen>
     <dimen name="icon_width">48dp</dimen>
     <dimen name="icon_height">48dp</dimen>
     <dimen name="icon_padding">16dp</dimen>

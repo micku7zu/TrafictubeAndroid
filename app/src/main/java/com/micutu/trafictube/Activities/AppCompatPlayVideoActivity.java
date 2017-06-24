@@ -1,12 +1,9 @@
 package com.micutu.trafictube.Activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import com.micutu.trafictube.Adapters.ViewHolders.PostsListViewHolder.PostsActionsListener;
 import com.micutu.trafictube.Data.Post;
-import com.micutu.trafictube.Data.User;
 import com.micutu.trafictube.Fragments.PlayVideoFragmentDialog;
 
 public abstract class AppCompatPlayVideoActivity extends ThemeAppCompatActivity implements PostsActionsListener {
@@ -28,6 +25,18 @@ public abstract class AppCompatPlayVideoActivity extends ThemeAppCompatActivity 
         this.playVideoFragmentDialog = new PlayVideoFragmentDialog();
         this.playVideoFragmentDialog.show(getSupportFragmentManager(), null);
         this.playVideoFragmentDialog.play(post);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (this.playVideoFragmentDialog == null) {
+            return;
+        }
+
+        if (this.playVideoFragmentDialog.isDeepLink() || this.playVideoFragmentDialog.isInstallFragmentVisible()) {
+            this.playVideoFragmentDialog.dismiss();
+        }
     }
 
     public boolean onBackPressedContinue() {

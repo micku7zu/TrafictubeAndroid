@@ -9,7 +9,15 @@ public interface PlayerFragment {
 
     Boolean isFullscreen();
 
+    Boolean isDeepLink();
+
     interface InitializationListener {
-        void onInitialization(Boolean success);
+        enum InitializationResponse {
+            SUCCESS,
+            NOT_INSTALLED,
+            FAIL
+        }
+
+        void onInitialization(InitializationResponse response);
     }
 }

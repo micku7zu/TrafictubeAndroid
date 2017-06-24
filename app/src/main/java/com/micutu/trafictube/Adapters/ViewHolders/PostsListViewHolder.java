@@ -17,6 +17,7 @@ public class PostsListViewHolder extends RecyclerView.ViewHolder implements View
     /* views */
     private TextView title = null;
     private TextView more = null;
+    private TextView timeAgo = null;
     private NetworkImageView image = null;
 
     /* extra data */
@@ -30,6 +31,7 @@ public class PostsListViewHolder extends RecyclerView.ViewHolder implements View
         this.postsActionsListener = postsActionsListener;
 
         this.title = (TextView) itemView.findViewById(R.id.title);
+        this.timeAgo = (TextView) itemView.findViewById(R.id.time_ago);
         this.more = (TextView) itemView.findViewById(R.id.more);
         this.image = (NetworkImageView) itemView.findViewById(R.id.image);
 
@@ -52,6 +54,9 @@ public class PostsListViewHolder extends RecyclerView.ViewHolder implements View
         this.setMore(this.getMoreText(this.post));
         this.setImage(context, this.post.getImage());
 
+        if (this.post.getTimeAgo() != null) {
+            this.setTimeAgo(this.post.getTimeAgo());
+        }
     }
 
     public void setTitle(String text) {
@@ -66,6 +71,10 @@ public class PostsListViewHolder extends RecyclerView.ViewHolder implements View
         this.image.setImageUrl(url, VolleySingleton.getImageLoader(context));
     }
 
+    public void setTimeAgo(String text) {
+        this.timeAgo.setText(text);
+    }
+
     private String getMoreText(Post post) {
         String more = "";
         if (post.getUser() != null && post.getUser().getName() != null) {
@@ -74,10 +83,6 @@ public class PostsListViewHolder extends RecyclerView.ViewHolder implements View
 
         if (post.getVotes() != null) {
             more += post.getVotes() + " voturi \u2022 ";
-        }
-
-        if (post.getTimeAgo() != null) {
-            more += post.getTimeAgo() + " \u2022 ";
         }
 
         return more.substring(0, more.length() - 2);

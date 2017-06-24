@@ -1,6 +1,5 @@
 package com.micutu.trafictube.Fragments.Player;
 
-import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,13 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.micutu.trafictube.Crawler.VimeoCrawler;
-import com.micutu.trafictube.Views.Player.CustomVideoPlayer;
+import com.micutu.trafictube.R;
+import com.vimeo.android.deeplink.VimeoDeeplink;
 
 
-public class VimeoPlayerFragment extends Fragment implements PlayerFragment, CustomVideoPlayer.RotateButtonListener {
-
-    private CustomVideoPlayer customVideoPlayer = null;
+public class VimeoPlayerFragment extends Fragment implements PlayerFragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -25,39 +22,14 @@ public class VimeoPlayerFragment extends Fragment implements PlayerFragment, Cus
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        customVideoPlayer = new CustomVideoPlayer(getContext());
-        return customVideoPlayer;
-    }
-
-    @Override
     public void initialization(InitializationListener initializationListener) {
-        initializationListener.onInitialization(true);
+        boolean vimeoIsOk = VimeoDeeplink.isVimeoAppInstalled(getContext()) && VimeoDeeplink.canHandleVideoDeeplink(getContext());
+        initializationListener.onInitialization((vimeoIsOk) ? InitializationListener.InitializationResponse.SUCCESS : InitializationListener.InitializationResponse.NOT_INSTALLED);
     }
 
     @Override
     public void playVideo(String id) {
-        VimeoCrawler.getVimeoVideoDirectUrlYoutubeDl(getContext(), id, new VimeoCrawler.VimeoResponse() {
-            @Override
-            public void onResponse(final String vimeoDirectUrl) {
-                if (getContext() == null) {
-                    return;
-                }
-
-                if (vimeoDirectUrl.length() < 5) {
-                    Toast.makeText(getContext(), "Eroare :(", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        VimeoPlayerFragment.this.customVideoPlayer.setRotateButtonListener(VimeoPlayerFragment.this);
-                        VimeoPlayerFragment.this.customVideoPlayer.playVideoUrl(vimeoDirectUrl);
-                    }
-                });
-            }
-        });
+        VimeoDeeplink.showVideoWithUri(getContext(), "/videos/" + id);
     }
 
     @Override
@@ -71,9 +43,8 @@ public class VimeoPlayerFragment extends Fragment implements PlayerFragment, Cus
     }
 
     @Override
-    public void onRotateButtonClick() {
-        Boolean landscape = (getResources().getDisplayMetrics().widthPixels > getResources().getDisplayMetrics().heightPixels);
-        getActivity().setRequestedOrientation((landscape) ? ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT : ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+    public Boolean isDeepLink() {
+        return true;
     }
 
     @Override

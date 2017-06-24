@@ -38,15 +38,26 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="left|top"
                     android:background="?attrCardTitleTransparentBackgroundColor"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/title"
-                        android:layout_width="match_parent"
+                        android:text="Test"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:padding="16dp"
                         android:textColor="?attrCardTitleTextColor"
                         android:textSize="@dimen/text_size"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/time_ago"
+                        android:text=""
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        android:textColor="?attrCardTitleTextColor"
+                        android:textSize="@dimen/small_text_size"
                         android:textStyle="bold" />
                 </LinearLayout>
             </FrameLayout>

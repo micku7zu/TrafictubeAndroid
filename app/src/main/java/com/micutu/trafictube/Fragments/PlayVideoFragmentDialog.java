@@ -12,11 +12,13 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.micutu.trafictube.Crawler.GetPostSingleton;
 import com.micutu.trafictube.Crawler.Responses.VideoResponse;
 import com.micutu.trafictube.Data.Post;
 import com.micutu.trafictube.Data.Video;
+import com.micutu.trafictube.Fragments.Player.InstallPlayerFragment;
 import com.micutu.trafictube.Fragments.Player.PlayerFragment;
 import com.micutu.trafictube.Fragments.Player.VimeoPlayerFragment;
 import com.micutu.trafictube.Fragments.Player.YoutubePlayerFragment;
@@ -53,7 +55,7 @@ public class PlayVideoFragmentDialog extends DialogFragment implements PlayerFra
                 }
 
                 if (video == null) {
-                    PlayVideoFragmentDialog.this.showError();
+                    PlayVideoFragmentDialog.this.showError(R.string.error_loading);
                     return;
                 }
 
@@ -114,13 +116,33 @@ public class PlayVideoFragmentDialog extends DialogFragment implements PlayerFra
 
 
     @Override
-    public void onInitialization(Boolean success) {
-        if (!success) {
-            this.showError();
+    public void onInitialization(InitializationResponse response) {
+        if (response == InitializationResponse.FAIL) {
+            this.showError(R.string.error_player);
+            return;
+        }
+
+        if (response == InitializationResponse.NOT_INSTALLED) {
+            this.showInstall();
             return;
         }
 
         this.playerFragment.playVideo(video.getId());
+    }
+
+    private void showInstall() {
+        InstallPlayerFragment installPlayerFragment = new InstallPlayerFragment();
+        this.getChildFragmentManager().beginTransaction().replace(R.id.player_fragment, (Fragment) installPlayerFragment).commit();
+        this.getChildFragmentManager().executePendingTransactions();
+        installPlayerFragment.showInstall(this.video.getType());
+    }
+
+    public Boolean isInstallFragmentVisible() {
+        try {
+            return getChildFragmentManager().findFragmentById(R.id.player_fragment) instanceof InstallPlayerFragment;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public Boolean isFullscreen() {
@@ -137,6 +159,14 @@ public class PlayVideoFragmentDialog extends DialogFragment implements PlayerFra
         return isFullscreen;
     }
 
+    public Boolean isDeepLink() {
+        if (this.playerFragment == null) {
+            return true;
+        }
+
+        return this.playerFragment.isDeepLink();
+    }
+
     public void setFullscreen(Boolean fullscreen) {
         if (this.playerFragment == null) {
             return;
@@ -145,14 +175,18 @@ public class PlayVideoFragmentDialog extends DialogFragment implements PlayerFra
         this.playerFragment.setFullscreen(fullscreen);
     }
 
-    public void showError() {
+    public void showError(Integer errorId) {
         this.hideProgressBar();
+        this.getView().findViewById(R.id.player_fragment).setVisibility(View.GONE);
         this.getView().findViewById(R.id.error_container).setVisibility(View.VISIBLE);
+        ((TextView) this.getView().findViewById(R.id.error_text)).setText(errorId);
     }
 
     public void hideError() {
+        this.getView().findViewById(R.id.player_fragment).setVisibility(View.VISIBLE);
         this.getView().findViewById(R.id.error_container).setVisibility(View.GONE);
     }
+
 
     @Override
     public void onClick(View view) {
