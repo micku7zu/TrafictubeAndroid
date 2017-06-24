@@ -40,7 +40,7 @@ public class PostsListViewHolder extends RecyclerView.ViewHolder implements View
         ((AppCompatImageButtonWithTooltip) itemView.findViewById(R.id.thumbs_up)).setOnClickListener(this);
         ((AppCompatImageButtonWithTooltip) itemView.findViewById(R.id.play_button)).setOnClickListener(this);
 
-        if (this.postsActionsListener.showUsersPostsButton() == false) {
+        if (!this.postsActionsListener.showUsersPostsButton()) {
             ((AppCompatImageButtonWithTooltip) itemView.findViewById(R.id.view_user)).setVisibility(View.GONE);
         } else {
             ((AppCompatImageButtonWithTooltip) itemView.findViewById(R.id.view_user)).setOnClickListener(this);
@@ -59,19 +59,19 @@ public class PostsListViewHolder extends RecyclerView.ViewHolder implements View
         }
     }
 
-    public void setTitle(String text) {
+    private void setTitle(String text) {
         this.title.setText(text);
     }
 
-    public void setMore(String text) {
+    private void setMore(String text) {
         this.more.setText(text);
     }
 
-    public void setImage(Context context, String url) {
+    private void setImage(Context context, String url) {
         this.image.setImageUrl(url, VolleySingleton.getImageLoader(context));
     }
 
-    public void setTimeAgo(String text) {
+    private void setTimeAgo(String text) {
         this.timeAgo.setText(text);
     }
 
@@ -107,19 +107,19 @@ public class PostsListViewHolder extends RecyclerView.ViewHolder implements View
         }
     }
 
-    public void onPostClick(View view) {
+    private void onPostClick(View view) {
         this.postsActionsListener.showPost(this.post);
     }
 
-    public void onViewUserPressed(View view) {
+    private void onViewUserPressed(View view) {
         this.postsActionsListener.showUserPosts(this.post.getUser());
     }
 
-    public void onThumbsUpPressed(View view) {
+    private void onThumbsUpPressed(View view) {
 
     }
 
-    public void onPlayButtonPressed(View view) {
+    private void onPlayButtonPressed(View view) {
         this.postsActionsListener.showVideoDialog(this.post);
     }
 

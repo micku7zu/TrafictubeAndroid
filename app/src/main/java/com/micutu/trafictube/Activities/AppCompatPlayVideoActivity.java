@@ -40,7 +40,7 @@ public abstract class AppCompatPlayVideoActivity extends ThemeAppCompatActivity 
     }
 
     public boolean onBackPressedContinue() {
-        if (this.playVideoFragmentDialog != null && this.playVideoFragmentDialog.isFullscreen() == true) {
+        if (this.playVideoFragmentDialog != null && this.playVideoFragmentDialog.isFullscreen()) {
             this.playVideoFragmentDialog.setFullscreen(false);
             return false;
         } else {

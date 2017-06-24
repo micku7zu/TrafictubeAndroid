@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatPlayVideoActivity implements PostsAct
 
     public static String YOUTUBE_DEVELOPER_KEY = "AIzaSyBfF9G0xNvqZSg_h81X67jGqt5rAxFNWqs";
 
-    private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
 
@@ -44,7 +43,7 @@ public class MainActivity extends AppCompatPlayVideoActivity implements PostsAct
 
     public void init() {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_menu);
 
@@ -174,7 +173,7 @@ public class MainActivity extends AppCompatPlayVideoActivity implements PostsAct
 
     @Override
     public void onBackPressed() {
-        if(!this.onBackPressedContinue()) {
+        if (!this.onBackPressedContinue()) {
             return;
         }
 

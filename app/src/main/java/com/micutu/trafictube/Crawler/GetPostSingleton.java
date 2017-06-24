@@ -84,7 +84,7 @@ public class GetPostSingleton {
             video.setType(content.split("data-vt=\"")[1].split("\"")[0]);
             try {
                 video.setImageUrl(content.split("data-src=\"")[1].split("\"")[0]);
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
 
         } else if (content.contains("video-player\"><iframe")) {

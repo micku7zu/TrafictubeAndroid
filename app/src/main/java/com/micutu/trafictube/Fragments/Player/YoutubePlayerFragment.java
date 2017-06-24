@@ -1,14 +1,9 @@
 package com.micutu.trafictube.Fragments.Player;
 
-import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerSupportFragment;
 import com.micutu.trafictube.Activities.MainActivity;
-import com.micutu.trafictube.R;
 
 public class YoutubePlayerFragment extends YouTubePlayerSupportFragment implements PlayerFragment, YouTubePlayer.OnInitializedListener, YouTubePlayer.OnFullscreenListener {
 

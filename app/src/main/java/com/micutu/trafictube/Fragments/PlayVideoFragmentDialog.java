@@ -3,6 +3,7 @@ package com.micutu.trafictube.Fragments;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
@@ -73,6 +74,7 @@ public class PlayVideoFragmentDialog extends DialogFragment implements PlayerFra
         return view;
     }
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(final Bundle savedInstanceState) {
         final RelativeLayout root = new RelativeLayout(getActivity());
