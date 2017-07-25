@@ -42,20 +42,21 @@
 
                     <TextView
                         android:id="@+id/title"
-                        android:text="Test"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:padding="16dp"
+                        android:text="Test"
                         android:textColor="?attrCardTitleTextColor"
                         android:textSize="@dimen/text_size"
                         android:textStyle="bold" />
+
                     <TextView
                         android:id="@+id/time_ago"
-                        android:text=""
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="16dp"
+                        android:text=""
                         android:textColor="?attrCardTitleTextColor"
                         android:textSize="@dimen/small_text_size"
                         android:textStyle="bold" />
@@ -67,9 +68,9 @@
             android:layout_width="match_parent"
             android:layout_height="0dip"
             android:layout_weight="0.8"
+            android:background="?attrCardBottomBackgroundColor"
             android:gravity="center|right"
-            android:orientation="horizontal"
-            android:background="?attrCardBottomBackgroundColor">
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/more"
@@ -81,15 +82,6 @@
                 android:textSize="12sp" />
 
             <com.micutu.trafictube.Views.AppCompatImageButtonWithTooltip
-                android:id="@+id/view_user"
-                android:layout_width="@dimen/icon_width"
-                android:layout_height="@dimen/icon_height"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="@string/viewUserDescription"
-                android:padding="@dimen/icon_padding"
-                android:src="@drawable/ic_user" />
-
-            <com.micutu.trafictube.Views.AppCompatImageButtonWithTooltip
                 android:id="@+id/thumbs_up"
                 android:layout_width="@dimen/icon_width"
                 android:layout_height="@dimen/icon_height"
@@ -97,6 +89,15 @@
                 android:contentDescription="@string/thumbsUpDescription"
                 android:padding="@dimen/icon_padding"
                 android:src="@drawable/ic_thumbs_up" />
+
+            <com.micutu.trafictube.Views.AppCompatImageButtonWithTooltip
+                android:id="@+id/view_user"
+                android:layout_width="@dimen/icon_width"
+                android:layout_height="@dimen/icon_height"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/viewUserDescription"
+                android:padding="@dimen/icon_padding"
+                android:src="@drawable/ic_user" />
 
             <com.micutu.trafictube.Views.AppCompatImageButtonWithTooltip
                 android:id="@+id/play_button"
