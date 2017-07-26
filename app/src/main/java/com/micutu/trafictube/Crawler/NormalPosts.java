@@ -60,6 +60,7 @@ public class NormalPosts {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        VoteNonceSingleton.saveNonceFromHtml(response);
                         PostOfTheDaySingleton.setPost(context, response);
 
                         try {

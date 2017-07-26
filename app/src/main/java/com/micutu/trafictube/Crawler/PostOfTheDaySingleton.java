@@ -3,15 +3,10 @@ package com.micutu.trafictube.Crawler;
 import android.content.Context;
 import android.util.Log;
 
-import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.micutu.trafictube.Caches.LruBitmapCache;
 import com.micutu.trafictube.Crawler.Responses.PostListResponse;
 import com.micutu.trafictube.Data.Post;
 import com.micutu.trafictube.Data.Site;
@@ -70,6 +65,7 @@ public class PostOfTheDaySingleton {
                     @Override
                     public void onResponse(String response) {
                         try {
+                            VoteNonceSingleton.saveNonceFromHtml(response);
                             listener.onResponse(getPostOfTheDayFromResponse(response), null);
                         } catch (final Exception e) {
                             listener.onResponse(null, (new HashMap<String, Object>() {{

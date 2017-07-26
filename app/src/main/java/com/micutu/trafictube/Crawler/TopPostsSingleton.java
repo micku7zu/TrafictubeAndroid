@@ -6,7 +6,6 @@ import android.util.Log;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.micutu.trafictube.Crawler.Responses.PostListResponse;
 import com.micutu.trafictube.Crawler.Responses.PostsListResponse;
 import com.micutu.trafictube.Data.Site;
 import com.micutu.trafictube.Data.User;
@@ -132,6 +131,7 @@ public class TopPostsSingleton {
         StringRequest request = new StringRequest(Request.Method.GET, link, new com.android.volley.Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                VoteNonceSingleton.saveNonceFromHtml(response);
                 TopPostsSingleton.getInstance().content = response;
                 instance.lastUpdate = getCurrentTime();
                 onResponse.onResponse(response);
@@ -152,6 +152,7 @@ public class TopPostsSingleton {
             @Override
             public void onResponse(String response) {
                 try {
+                    VoteNonceSingleton.saveNonceFromHtml(response);
                     onResponse.onResponse(getTwoDaysTopPostsFromResponse(response), new HashMap<String, Object>());
                 } catch (final Exception e) {
                     onResponse.onResponse(null, (new HashMap<String, Object>() {{

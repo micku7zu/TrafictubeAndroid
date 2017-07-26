@@ -29,6 +29,7 @@ public class GetPostSingleton {
         StringRequest request = new StringRequest(Request.Method.GET, postLink, new com.android.volley.Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                VoteNonceSingleton.saveNonceFromHtml(response);
                 videoResponse.onResponse(getVideoFromPostPage(response), new HashMap<String, Object>());
             }
         }, new com.android.volley.Response.ErrorListener() {
@@ -54,6 +55,7 @@ public class GetPostSingleton {
             @Override
             public void onResponse(String response) {
                 try {
+                    VoteNonceSingleton.saveNonceFromHtml(response);
                     postResponse.onResponse(parsePostPage(response), new HashMap<String, Object>());
                 } catch (final Exception e) {
                     postResponse.onResponse(null, (new HashMap<String, Object>() {{
